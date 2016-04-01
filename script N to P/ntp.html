@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="services-text text-editer puppy active">
+                                        Pentuvuoden eläinlääkärikäynneillä annamme koiranpennullesi parhaat eväät sen koko elämän ajaksi.
+
+	Pentuvuosi-ohjelman avulla pentusi saa sille sopivaa ennakoivaa hoitoa ja huolenpitoa sen ensimmäisistä viikoista lähtien. Pentusi terveydenhoito on alusta alkaen suunnitelmallista ja tähtää koirasi parhaaseen mahdolliseen hyvinvointiin ja terveyteen.
+
+	Huolehdimme pennustasi myös silloin, kun sitä kohtaa poikkeuksellinen hätä, sairaus tai onnettomuus. Pentusi apuna ovat parhaat erikoisosaajat ja se saa tarvittaessa nopeasti sairaalahoitoa vuorokauden ympäri päivystävissä eläinsairaaloissamme.                                    </div>
+	<div class="services-text text-editer young">
+                                        Aikuinen koira tarvitsee hyvää vuosittaista terveydenhoitoa pysyäkseen hyväkuntoisena ja aktiivisena.
+
+Terveystarkastuksessa varmistamme kattavasti koirasi terveydentilan ja rokotustarpeen rodun käyttötarkoitus ja elinympäristö huomioiden. Vuosittainen loishäätösuunnitelma pitää punkit ja madot loitolla sekä koirasta että muusta perheestä. Hammastarkastus on tärkeä rutiini erityisesti pienemmille koirille.
+
+Erikoisasiantuntijamme ovat apunanne, kun koiraasi kohtaa poikkeuksellinen hätä, sairaus tai onnettomuus. Hädän hetkellä se saa nopeasti sairaalahoitoa vuorokauden ympäri päivystävissä eläinsairaaloissamme.                                    </div>
+
+	<div class="services-text text-editer young">
+                                        Aikuinen koira tarvitsee hyvää vuosittaista terveydenhoitoa pysyäkseen hyväkuntoisena ja aktiivisena.
+
+Terveystarkastuksessa varmistamme kattavasti koirasi terveydentilan ja rokotustarpeen rodun käyttötarkoitus ja elinympäristö huomioiden. Vuosittainen loishäätösuunnitelma pitää punkit ja madot loitolla sekä koirasta että muusta perheestä. Hammastarkastus on tärkeä rutiini erityisesti pienemmille koirille.
+
+Erikoisasiantuntijamme ovat apunanne, kun koiraasi kohtaa poikkeuksellinen hätä, sairaus tai onnettomuus. Hädän hetkellä se saa nopeasti sairaalahoitoa vuorokauden ympäri päivystävissä eläinsairaaloissamme.                                    </div>
+
+</body>
+</html>
+
+<script>
+	(function({
+		window.onload = function(){
+				/**
+				  * this code is changing "\n" - line break to style wich yousing html tag <p></p> 
+				  * 
+				  *	@author: Ivan Kaduk
+				  * @param text: objectHTML - the object wich contain text 
+				  *	@return string - text with a result string
+				  */
+			function Text(text){
+				this.text = text;
+				this.innertext = this.text.innerHTML;
+
+				// private function that explode the main text
+				function explode(text){
+					return text.split('\n');
+				}
+
+				// public function that genereting a new content
+				this.getelement = function(){
+
+					dirtArray = explode(this.innertext);
+
+					for (var i = 0; i < dirtArray.length; i++) {
+						if(dirtArray[i] == ''){
+							dirtArray.splice(i,1);
+						}
+					}
+					for (var i = 0; i < dirtArray.length; i++) {
+						dirtArray[i] = '<p>'+dirtArray[i]+"</p>";
+					}
+					
+					return dirtArray.join('');;
+				}
+			}
+
+			// example of usage
+			elements = document.getElementsByClassName('services-text');
+			for (var i = 0; i < elements.length; i++) {
+				element = new Text(elements[i]);
+				elements[i].innerHTML = (element.getelement());
+			};
+
+		}
+	}))	
+</script>
