@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="wall">
+		<div><img src="1.jpg" alt=""></div>
+		
+		<div><img src="2.jpg" alt=""></div>
+
+		<div><img src="3.jpg" alt=""></div>
+		<div><img src="4.jpg" alt=""></div>
+		<div><img src="5.jpg" alt=""></div>
+		<div><img src="6.jpg" alt=""></div>
+
+		<div><img src="7.jpg" alt=""></div>
+		<div><img src="8.jpg" alt=""></div>
+
+	</div>
+</body>
+</html>
+
+<style>
+	#wall{
+		width: 100%;
+		max-width: 960px;
+		margin: 0 auto;
+	}
+	.two-col-img{
+		width: 50%;
+		height: 200px;
+		overflow: hidden;
+		float: left;
+		display: flex;
+  		align-items: center;
+	}
+	.two-col-img img{
+		width: 100%;
+	}
+	.one-col-img{
+		width: 25%;
+		height: 200px;
+		overflow: hidden;
+		float: left;
+		display: flex;
+  		align-items: center;
+	}
+	.one-col-img img{
+		width: 100%;
+	}
+</style>
+
+<script>
+/**
+* main class of wall
+* 
+* 
+* 
+*/
+
+function Wall()
+{
+	
+	/**
+	  * That is construct function, that according enabled parametrs:
+	  * if we dont have a sub container it must to do all work without it  
+	  *
+	  * @param name: string id of container
+	  * @param cont: string tag of subContainer
+	  * 
+	  */
+
+	this.init = function(name)
+	{
+		// main parametrs 
+		this.name = name;
+
+
+		// container initializing 
+		this.wallCont = document.getElementById(this.name);
+
+		// image arrays 1. all 2. w > h 3.  
+		this.chArray = new Array();
+		// this.widthEl = new Array();
+		// this.heightEl = new Array();
+		this.orderArray = new Array();
+		orderArray = new Array();
+
+		// creting of array of images true - fith parent , false without it 
+
+		this.ch = this.wallCont.getElementsByTagName('img');
+		this.chCount = this.wallCont.getElementsByTagName('img').length;
+		chCount = this.chCount;
+			
+		for(var i= 0; i<this.chCount; i++)
+		{
+			this.chArray.push(this.ch[i]);
+		}
+
+		for( var i = 0 ; i < this.chArray.length ; i++ )
+		{
+
+			if((this.chArray[i].clientHeight > this.chArray[i].clientWidth)
+				||(this.chArray[i].clientHeight == this.chArray[i].clientWidth))
+			{
+				// this.widthEl.push(this.chArray[i]);
+				this.orderArray[i] = new Array();
+				this.orderArray[i][0] = this.chArray[i];
+				this.orderArray[i][1] = 1;
+			}
+			else
+			{
+				// this.heightEl.push(this.chArray[i]);
+				this.orderArray[i] = new Array();
+				this.orderArray[i][0] = this.chArray[i];
+				this.orderArray[i][1] = 2;
+			}
+		}
+
+		orderArray = this.orderArray;
+
+		// creating a wall
+		this.refresh();
+			
+		window.addEventListener('resize', function ()
+			{
+				if(orderArray[0][1] == 1){
+					height = orderArray[0][0].parentNode.clientWidth + "px";
+				}
+				else if(orderArray[0][1] == 2)
+				{
+					height = orderArray[0][0].parentNode.clientWidth/2 + "px";
+				}
+				else{}
+				for (var i = 0; i < chCount; i++) 
+				{
+					if (orderArray[i][1] == 1) 
+					{
+						orderArray[i][0].parentNode.style.height = height;
+					}
+					else if(orderArray[i][1] == 2)
+					{
+						orderArray[i][0].parentNode.style.height = height;
+					} 
+					else{}
+				}
+			//window.location=document.URL;
+			});
+
+	}
+ 
+	/**
+	  * This function creating a wall
+	  *
+	  * 
+	  */
+
+	this.refresh = function()
+	{
+		console.log(this.chArray);
+		console.log(this.orderArray);
+
+		// for (var i = 0; i < this.widthEl.length; i++) 
+		// {
+		// 	this.widthEl[i].parentNode.className = 'one-col-img';
+		// }
+		// for (var i = 0; i < this.heightEl.length; i++) 
+		// {
+		// 	this.heightEl[i].parentNode.className = 'two-col-img';
+		// }
+
+		this.counter = 0;
+		this.number = 0;
+		this.imgCache ;
+
+		for (var i = 0; i < this.chArray.length; i++) 
+		{
+
+
+			if (this.orderArray[i][1] == '1')
+			{
+				this.counter = this.counter + 1;
+			}
+			else if(this.orderArray[i][1] == '2')
+			{
+				this.counter = this.counter + 2;
+			} 
+
+			if(this.counter > 4)
+			{
+				this.imgCache = this.chArray[i];
+				this.chArray[i] = this.chArray[i+1]
+				this.chArray[i+1] = this.imgCache;
+				this.number = this.orderArray[i][1];
+				this.orderArray[i][1] = this.orderArray[i+1][1];
+				this.orderArray[i+1][1] = this.number;
+				// this.chArray[i].parentNode.className = 'one-col-img';
+				// this.chArray[i+1].parentNode.className = 'two-col-img';
+				console.log('wow');
+				this.counter = 0;
+			}
+			else if(this.counter == 4)
+			{
+				console.log(this.counter);
+				console.log('row');
+				this.counter = 0;
+				
+			}
+			//console.log(this.orderArray[i][1]);
+			//console.log(this.counter);
+		}
+
+		//console.log(this.counter);
+		for (var i = 0; i < this.chArray.length; i++) 
+		{
+			if (this.orderArray[i][1] == 1) 
+			{
+				this.chArray[i].parentNode.className = 'one-col-img';
+				this.chArray[i].parentNode.style.height = this.chArray[i].parentNode.clientWidth + "px";
+			}
+			else if(this.orderArray[i][1] == 2)
+			{
+				this.chArray[i].parentNode.className = 'two-col-img';
+				this.chArray[i].parentNode.style.height = this.chArray[i].parentNode.clientWidth/2 + "px";
+			} 
+			else{}
+		}
+
+		this.wallCont.innerHTML = '';
+
+
+		for (var i = 0; i < this.chArray.length; i++) 
+		{
+			
+			 this.wallCont.appendChild(this.chArray[i].parentNode);
+
+			
+			
+		}
+	}
+
+
+
+}
+
+
+window.onload = function()
+{
+	var wall = new Wall();
+	wall.init('wall');
+}
+
+
+
+
+
+
+</script>

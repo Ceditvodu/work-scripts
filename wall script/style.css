@@ -1,0 +1,27 @@
+#wall{
+	width: 100%;
+	max-width: 960px;
+	margin: 0 auto;
+}
+.two-col-img{
+	width: 50%;
+	height: 200px;
+	overflow: hidden;
+	float: left;
+	display: flex;
+  		align-items: center;
+}
+.two-col-img img{
+	width: 100%;
+}
+.one-col-img{
+	width: 25%;
+	height: 200px;
+	overflow: hidden;
+	float: left;
+	display: flex;
+  		align-items: center;
+}
+.one-col-img img{
+	width: 100%;
+}
