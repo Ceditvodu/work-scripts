@@ -49,7 +49,7 @@
 					<div class="sliderBack">
 						<div class="back">
 							<div width="100%" height="100%" class="item item-1">
-								dfdfgd
+								dfdfgd1
 							</div>
 							<div width="100%" height="100%" class="item item-2">
 								<video width="100%" loop muted autoplay>
@@ -57,7 +57,7 @@
 						    	</video>
 							</div>
 							<div width="100%" height="100%" class="item item-3">
-								dfgdfg
+								dfgdfg2 dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2
 							</div>
 						</div>
 					</div>
@@ -105,6 +105,8 @@ var slider = function(slider){
 	this.slider_back.style.width = this.back_width+'px';
 	this.slider_cont.style.width = this.cont_width+'px';
 
+	this.slide_back_coordinates = new Array();
+
 	for (var i = 0; i < this.back.length; i++) {
 		this.back[i].style.width=window.innerWidth+'px';
 	};
@@ -136,71 +138,154 @@ var slider = function(slider){
 		this.right_arrow.style.right = '50px';
 
 		this.slide_direction = 'left';
+
+		var slide_back_coordinates = new Array();
+		var margin_position = 0;
+		var margin_position_index = 0;
+
+		var pause;
 	}
+	for (var i = 0; i < this.back.length; i++) {
+		slide_back_coordinates[i] = window.innerWidth * i;
+	};
 
 
 	if((this.back.length>1)&&(this.cont.length>1)){
-		var step = 0;
-		var direction_inner = this.slide_direction;
-		var slider_iteration = window.innerWidth;
-		var slider_iteration_inner = slider_iteration;
 
-		setTimeout(function(width){ loop_start(width); }, 5000, this.back_width);
-
-
-	}
-	function loop_start(width){
-
-		loop = setInterval(function(back,width,direction){
-			
-			if(document.getElementById('left_arrow')&&(document.getElementById('right_arrow'))){
-				document.getElementById('left_arrow').onclick = function(){
-					//do something
-					direction_inner = 'left';
-				}
-				document.getElementById('right_arrow').onclick = function(){
-					//do something
-					direction_inner = 'right';
-				}
-			}
-
-			if(direction_inner == 'left'){
-				step = step + 10;	
-				console.log(slider_iteration_inner + ' ' + width);
-				if(step>=width){
-					step=0;
-					back.margin = "0 0 0 0";
-					slider_iteration = window.innerWidth;
-					slider_iteration_inner = slider_iteration;
-				}
-				if(step>=slider_iteration_inner){
-					clearInterval(loop);
-					slider_iteration_inner = slider_iteration_inner + slider_iteration;
-					
-				}
-
-
-			}else if(direction_inner == 'right'){
-				step = step - 10;
-				if(step<0){
-					step = width;
-					back.margin = "0 0 0 -"+step+"px";
-				}
-				if(step<slider_iteration_inner){
-					clearInterval(loop);
-					slider_iteration_inner = slider_iteration_inner - slider_iteration;
-				}
-			}
-
-			back.style.margin = "0 0 0 -"+step+"px";
-
-			
-		},1,document.getElementsByClassName('back')[0],width,this.slide_direction);
-		setTimeout(function(width){ loop_start(width); }, 5000, width);
+		slider_slid_left(margin_position_index,10,3000);
+		
 	}
 
 
-	console.log(this.slider_back);
+	var queue_of_slider = new queue();
+
+
+	function slider_slid_left(margin_position_index,step_width,pause_time){
+		
+		pause = setTimeout(function(margin_position_index){
+			slide = setInterval(function(){
+				margin_position = margin_position - step_width;
+				document.getElementsByClassName('back')[0].style.margin = '0 0 0 '+ margin_position + 'px';
+
+				if(margin_position <= (slide_back_coordinates[margin_position_index+1]*(-1))){
+
+					clearInterval(slide);
+					newAction();
+				}
+
+			},1,margin_position_index)
+		},pause_time,margin_position_index)
+	}
+
+	function slider_slid_right(margin_position_index,step_width,pause_time){
+		pause = setTimeout(function(margin_position_index){
+			slide = setInterval(function(){
+				margin_position = margin_position + step_width;
+				document.getElementsByClassName('back')[0].style.margin = '0 0 0 '+ margin_position + 'px';
+
+				if(margin_position >= (slide_back_coordinates[margin_position_index]*(1))){
+					clearInterval(slide);
+					newAction();
+
+				}
+
+			},1,margin_position_index)
+		},pause_time,margin_position_index)
+
+	}
+
+	this.left_arrow.onclick = function(){
+		clearTimeout(pause);
+
+		queue_of_slider.appendQueueDiraction('left');
+		newAction();
+	}
+	this.right_arrow.onclick = function(){
+		clearTimeout(pause);
+		queue_of_slider.appendQueueDiraction('right');
+		newAction();
+	}
+
+
+
+	function newAction(){
+
+		if(queue_of_slider.isFull()){
+			if(queue_of_slider.getNextAction() == 'left'){
+
+				margin_position_index = margin_position_index+1;
+
+
+				if(margin_position_index >= slide_back_coordinates.length-1){
+					margin_position_index  = 0;
+
+					slider_slid_right(margin_position_index,10,0);
+					margin_position_index  = -1;
+				}else{
+					slider_slid_left(margin_position_index,10,0);
+				}
+
+			}else if(queue_of_slider.getNextAction() == 'right'){
+				margin_position_index = margin_position_index-1;
+
+
+				if(margin_position_index <= slide_back_coordinates.length-1){
+					margin_position_index  = 0;
+
+					slider_slid_left(margin_position_index,10,0);
+					margin_position_index  = -1;
+				}else{
+					slider_slid_right(margin_position_index,10,0);
+				}
+
+			}
+		}else{
+
+			margin_position_index = margin_position_index+1;
+			console.log(queue_of_slider);
+
+			if(margin_position_index >= slide_back_coordinates.length-1){
+				margin_position_index  = 0;
+
+				slider_slid_right(margin_position_index,10,3000);
+				margin_position_index  = -1;
+			}else{
+				slider_slid_left(margin_position_index,10,3000);
+			}
+		}
+	}
+}
+
+var queue = function(){
+	this.queue = new Array();
+
+	this.appendQueueDiraction = function(diraction){
+		console.log(this.queue)
+		this.queue[this.queue.length] = diraction;
+	}
+
+	this.isFull = function(){
+		if(this.queue.length > 0){
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+
+	this.getNextAction = function(){
+		if (this.queue[0] == 'left') {
+			this.queue.splice(0);
+			console.log(this.queue);
+			return 'left';
+		}else if(this.queue[0] == 'right'){
+			this.queue.splice(0);
+			console.log(this.queue);
+			return 'right';
+		}else{
+			return 'nothing';
+		}
+	}
 }
 
 window.onload = function(){
