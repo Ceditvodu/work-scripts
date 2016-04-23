@@ -59,6 +59,8 @@
 							<div width="100%" height="100%" class="item item-3">
 								dfgdfg2 dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2
 							</div>
+
+							
 						</div>
 					</div>
 					<div class="sliderCont">
@@ -152,152 +154,124 @@ var slider = function(slider){
 
 	if((this.back.length>1)&&(this.cont.length>1)){
 
-		slider_slid_left(margin_position_index,10,10000);
+		//slider_slid_left(margin_position_index,10,10000);
+		var clicker = new Clicker('left', this.left_arrow, this.right_arrow);
+		clicker.start_clicking();
 		
 	}
 
+	// creating new object that will be contain our history
+	var history = new History();
 
-	var queue_of_slider = new queue();
-
-
-	function slider_slid_left(margin_position_index,step_width,pause_time){
+	// function to sliding right
+	function slider_slid_right(margin_position_index,step_width,slider_back){
 		
-		pause = setTimeout(function(margin_position_index){
-			slide = setInterval(function(){
-				margin_position = margin_position - step_width;
-				document.getElementsByClassName('back')[0].style.margin = '0 0 0 '+ margin_position + 'px';
+			slide = setInterval(function(margin_position_index, step_width, slider_back){
 
-				if(margin_position <= (slide_back_coordinates[margin_position_index+1]*(-1))){
-					// if(margin_position = (slide_back_coordinates[margin_position_index+1]*(-1))){
-					// 	clearInterval(slide);
-					// 	newAction('left');
-					// }
-					clearInterval(slide);
-					newAction();
-				}
-				if((margin_position*(-1))>(slide_back_coordinates[slide_back_coordinates.length-1]*1)){
-					clearInterval(slide);
-					newAction('left');
-				}
+				margin_position_index = margin_position_index - 1;
 
-
-
-			},1,margin_position_index)
-		},pause_time,margin_position_index)
-	}
-
-	function slider_slid_right(margin_position_index,step_width,pause_time){
-		pause = setTimeout(function(margin_position_index){
-			slide = setInterval(function(){
 				margin_position = margin_position + step_width;
-				document.getElementsByClassName('back')[0].style.margin = '0 0 0 '+ margin_position + 'px';
+				
+				slider_back.style.margin = '0 0 0 '+ margin_position + 'px';
 
 				if(margin_position >= (slide_back_coordinates[margin_position_index]*(-1))){
-
-						clearInterval(slide);
-						newAction();	
-
-
+					slider_back.style.margin = '0 0 0 '+ (slide_back_coordinates[margin_position_index]*(-1)) + 'px';
+					clearInterval(slide);
 				}
 
-			},1, margin_position_index)
-		},pause_time, margin_position_index)
+			},1,margin_position_index, step_width, slider_back)
 
 	}
 
+	// function to sliding left
+	function slider_slid_left(margin_position_index,step_width,slider_back){
+
+			slide = setInterval(function(margin_position_index, step_width, slider_back){
+
+				margin_position_index = margin_position_index + 1;
+
+				margin_position = margin_position - step_width;
+				
+				slider_back.style.margin = '0 0 0 '+ margin_position + 'px';
+
+				if(margin_position <= (slide_back_coordinates[margin_position_index]*(-1))){
+					slider_back.style.margin = '0 0 0 '+ (slide_back_coordinates[margin_position_index]*(-1)) + 'px';
+					clearInterval(slide);
+				}
+
+			},1, margin_position_index, step_width, slider_back)
+
+	}
+
+	this.left_arrow.slider_back = this.slider_back;
 	this.left_arrow.onclick = function(){
-		clearTimeout(pause);
-
-		queue_of_slider.appendQueueDiraction('left');
-		newAction('left');
-	}
-	this.right_arrow.onclick = function(){
-		clearTimeout(pause);
-		queue_of_slider.appendQueueDiraction('right');
- 
-		newAction('right');
-	}
-
-
-
-	function newAction(current_button){
-		if(queue_of_slider.isFull()){
-			if(queue_of_slider.getNextAction() == 'left'){
-
-				queue_of_slider.removeIteme();
-
-				if(margin_position_index == /*-1*/ (slide_back_coordinates.length-1)){
-					margin_position_index  = 0;
-
-					slider_slid_right(margin_position_index,40,0);
-					margin_position_index  = -1;
-				}else{
-					slider_slid_left(margin_position_index,40,0);
-				}
-
-
-			}else if(queue_of_slider.getNextAction() == 'right'){
-
-				queue_of_slider.removeIteme();
-
-				if(margin_position_index== 0){
-					margin_position_index = slide_back_coordinates.length - 1;
-					slider_slid_left(margin_position_index,40,0);
-
-				}else{
-					margin_position_index = margin_position_index -1 ;
-					slider_slid_right(margin_position_index,40,0);
-					//margin_position_index = margin_position_index +1;
-				}
-
-
-
-			}
+		var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
+		if(margin_position_index<slide_back_coordinates.length-1){
+			slider_slid_left(margin_position_index,10,this.slider_back);
+			margin_position_index = margin_position_index + 1;
 		}else{
+			margin_position_index = 1;
+			slider_slid_right(margin_position_index,40,this.slider_back);
+			margin_position_index = margin_position_index - 1;
+		}
 
-			margin_position_index = margin_position_index+1;
+		// add to history new start position (right)
+		history.slide_came_frome('right');
 
-			if((margin_position_index >= (slide_back_coordinates.length-1))&&(current_button == 'left')){
-				margin_position_index  = 0;
+	}
+	this.right_arrow.slider_back = this.slider_back;
+	this.right_arrow.onclick = function(){
+		var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
+		if(margin_position_index>0){
+			slider_slid_right(margin_position_index,10,this.slider_back);
+			margin_position_index = margin_position_index - 1;
+		}else{
+			margin_position_index = slide_back_coordinates.length-2;
+			slider_slid_left(margin_position_index,40,this.slider_back);
+			margin_position_index = margin_position_index + 1;
+		}
 
-				slider_slid_right(margin_position_index,10,10000);
-				margin_position_index  = -1;
-			}else{
-				slider_slid_left(margin_position_index,10,10000);
-			}
+		// add to history new start position (left)
+		history.slide_came_frome('left');
+
+	}
+}
+
+var History = function(){
+
+	this.came_from = 'left';
+
+	this.slide_came_frome = function(diraction){
+		if(diraction == null){
+			return this.came_from;
+		}else{
+			this.came_from = diraction;
 		}
 	}
 }
 
-var queue = function(){
-	this.queue = new Array();
+var Clicker = function(diraction, arrow_left, arrow_right){
+	this.diraction = diraction;
+	this.arrow_left = arrow_left;
+	this.arrow_right = arrow_right;
 
-	this.appendQueueDiraction = function(diraction){
-		this.queue[this.queue.length] = diraction;
+	this.start_clicking = function(){
+		if(this.diraction == 'left'){
+			var click = setInterval(function(arrow_left){
+				arrow_left.click();
+			},10000 ,this.arrow_left)
+		}else if(this.diraction == 'right'){
+			var click = setInterval(function(arrow_right){
+				arrow_right.click();
+			},10000 ,this.arrow_right)
+
+		}	
 	}
 
-	this.isFull = function(){
-		if(this.queue.length > 0){
-			return true;
-		}else{
-			return false;
-		}
-
+	this.stop_clicking = function(){
+		clearInterval(click);
 	}
 
-	this.getNextAction = function(){
-		if (this.queue[0] == 'left') {
-			return 'left';
-		}else if(this.queue[0] == 'right'){
-			return 'right';
-		}else{
-			return 'nothing';
-		}
-		
-	}
-	this.removeIteme = function(){
-		this.queue.splice(0);
-	}
 }
 
 window.onload = function(){
