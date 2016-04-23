@@ -15,6 +15,25 @@
 		#slider{
 			overflow: hidden;
 		}
+		#slider .container{
+			width: 960px;
+			margin: 0 auto;
+	
+		}
+		#slider .hover_section{
+			position: relative;
+			top: 10%;
+			bottom: 10%;
+			left: 10%;
+			right: 10%;
+			width: 80%;
+			z-index: 1;
+
+		}
+		#slider video{
+			position: absolute;
+			z-index: -1;
+		}
 		.sliderBack{
 			position: absolute;
 			top: 0;
@@ -49,35 +68,35 @@
 					<div class="sliderBack">
 						<div class="back">
 							<div width="100%" height="100%" class="item item-1">
-								dfdfgd1
+								<div class="hover_section">
+									<div class="container">
+										<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
+										<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
+									</div>
+								</div>
 							</div>
 							<div width="100%" height="100%" class="item item-2">
-								<video width="100%" loop muted autoplay>
+								<video width="100%" > <!-- loop muted autoplay -->
 							        <source src="img/Complete_system_for_private_homes_-_Siedle_Select.mp4" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"">
-						    	</video>
+						    </video>
+								<div class="hover_section">
+									<div class="container">
+										<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
+										<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
+									</div>
+								</div>
 							</div>
 							<div width="100%" height="100%" class="item item-3">
-								dfgdfg2 dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2dfgdfg2
+								<div class="hover_section">
+									<div class="container">
+										<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
+										<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
+									</div>
+								</div>
 							</div>
-
-							
 						</div>
 					</div>
-					<div class="sliderCont">
-						<div class="cont">
-							<div class="item item-1">
-								<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
-								<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
-							</div>
-							<div class="item item-2">
-								<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen2</a>
-								<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
-							</div>
-							<div class="item item-3">
-								<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen3</a>
-								<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
-							</div>
-						</div>	
+
 					</div>
 				</div>
 
@@ -94,29 +113,23 @@ var slider = function(slider){
 	this.slider = document.getElementById(this.slider_id);
 
 	this.slider_back = this.slider.getElementsByClassName('back')[0];
-	this.slider_cont = this.slider.getElementsByClassName('cont')[0];
 
 	this.back = this.slider_back.getElementsByClassName('item');
-	this.cont = this.slider_cont.getElementsByClassName('item');
 
 
 	this.back_width = window.innerWidth*this.back.length;
-	this.cont_width = document.getElementsByClassName('cont')[0].clientWidth*this.cont.length;
-	this.cont_item_width = document.getElementsByClassName('cont')[0].clientWidth;
+
 
 	this.slider_back.style.width = this.back_width+'px';
-	this.slider_cont.style.width = this.cont_width+'px';
 
 	this.slide_back_coordinates = new Array();
 
 	for (var i = 0; i < this.back.length; i++) {
 		this.back[i].style.width=window.innerWidth+'px';
 	};
-	for (var i = 0; i < this.cont.length; i++) {
-		this.cont[i].style.width=this.cont_item_width+'px';
-	};
 
-	if((this.back.length>1)&&(this.cont.length>1)){
+
+	if((this.back.length>1)){
 		this.arrow_set = this.slider.appendChild(document.createElement('div'));
 		this.arrow_set.id = 'arrow_set';
 
@@ -139,33 +152,40 @@ var slider = function(slider){
 		this.left_arrow.style.left = '50px';
 		this.right_arrow.style.right = '50px';
 
+		this.hover_section = this.slider.getElementsByClassName('hover_section');
+
+		// this.hover_section = this.slider.appendChild(document.createElement('div'));
+		// this.hover_section.id = 'hover_section';
+		// this.hover_section.style.position = 'absolute';
+		// this.hover_section.style.top = '10px';
+		// this.hover_section.style.bottom = '10px';
+		// this.hover_section.style.left = '150px';
+		// this.hover_section.style.right = '150px';
+		//this.hover_section.style.zIndex = '-1';
+
 		this.slide_direction = 'left';
 
 		var slide_back_coordinates = new Array();
 		var margin_position = 0;
 		var margin_position_index = 0;
+		var clickable = true;
 
-		var pause;
 	}
 	for (var i = 0; i < this.back.length; i++) {
 		slide_back_coordinates[i] = window.innerWidth * i;
 	};
 
+	if((this.back.length>1)){
 
-	if((this.back.length>1)&&(this.cont.length>1)){
-
-		//slider_slid_left(margin_position_index,10,10000);
 		var clicker = new Clicker('left', this.left_arrow, this.right_arrow);
 		clicker.start_clicking();
 		
 	}
 
-	// creating new object that will be contain our history
-	var history = new History();
 
 	// function to sliding right
 	function slider_slid_right(margin_position_index,step_width,slider_back){
-		
+			clickable = false;
 			slide = setInterval(function(margin_position_index, step_width, slider_back){
 
 				margin_position_index = margin_position_index - 1;
@@ -176,6 +196,7 @@ var slider = function(slider){
 
 				if(margin_position >= (slide_back_coordinates[margin_position_index]*(-1))){
 					slider_back.style.margin = '0 0 0 '+ (slide_back_coordinates[margin_position_index]*(-1)) + 'px';
+					clickable = true;
 					clearInterval(slide);
 				}
 
@@ -185,7 +206,7 @@ var slider = function(slider){
 
 	// function to sliding left
 	function slider_slid_left(margin_position_index,step_width,slider_back){
-
+			clickable = false;
 			slide = setInterval(function(margin_position_index, step_width, slider_back){
 
 				margin_position_index = margin_position_index + 1;
@@ -196,6 +217,7 @@ var slider = function(slider){
 
 				if(margin_position <= (slide_back_coordinates[margin_position_index]*(-1))){
 					slider_back.style.margin = '0 0 0 '+ (slide_back_coordinates[margin_position_index]*(-1)) + 'px';
+					clickable = true;
 					clearInterval(slide);
 				}
 
@@ -205,50 +227,49 @@ var slider = function(slider){
 
 	this.left_arrow.slider_back = this.slider_back;
 	this.left_arrow.onclick = function(){
-		var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
-		if(margin_position_index<slide_back_coordinates.length-1){
-			slider_slid_left(margin_position_index,10,this.slider_back);
-			margin_position_index = margin_position_index + 1;
-		}else{
-			margin_position_index = 1;
-			slider_slid_right(margin_position_index,40,this.slider_back);
-			margin_position_index = margin_position_index - 1;
+		if(clickable == true){
+			var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
+			if(margin_position_index<slide_back_coordinates.length-1){
+				slider_slid_left(margin_position_index,10,this.slider_back);
+				margin_position_index = margin_position_index + 1;
+			}else{
+				margin_position_index = 1;
+				slider_slid_right(margin_position_index,20,this.slider_back);
+				margin_position_index = margin_position_index - 1;
+			}
 		}
-
-		// add to history new start position (right)
-		history.slide_came_frome('right');
-
 	}
 	this.right_arrow.slider_back = this.slider_back;
 	this.right_arrow.onclick = function(){
-		var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
-		if(margin_position_index>0){
-			slider_slid_right(margin_position_index,10,this.slider_back);
-			margin_position_index = margin_position_index - 1;
-		}else{
-			margin_position_index = slide_back_coordinates.length-2;
-			slider_slid_left(margin_position_index,40,this.slider_back);
-			margin_position_index = margin_position_index + 1;
-		}
-
-		// add to history new start position (left)
-		history.slide_came_frome('left');
-
-	}
-}
-
-var History = function(){
-
-	this.came_from = 'left';
-
-	this.slide_came_frome = function(diraction){
-		if(diraction == null){
-			return this.came_from;
-		}else{
-			this.came_from = diraction;
+		if(clickable == true){
+			var decrimated_slide_back_coordinates = slide_back_coordinates.length - 1;
+			if(margin_position_index>0){
+				slider_slid_right(margin_position_index,10,this.slider_back);
+				margin_position_index = margin_position_index - 1;
+			}else{
+				margin_position_index = slide_back_coordinates.length-2;
+				slider_slid_left(margin_position_index,20,this.slider_back);
+				margin_position_index = margin_position_index + 1;
+			}	
 		}
 	}
+
+	for (var i = 0; i < this.hover_section.length; i++) {
+		this.hover_section[i].onmouseover = function(){
+			clickable = false;
+			console.log(clickable);
+		}
+
+		this.hover_section[i].onmouseout = function(){
+			clickable = true;
+			console.log(clickable);
+		}
+	};
+
+
 }
+
+
 
 var Clicker = function(diraction, arrow_left, arrow_right){
 	this.diraction = diraction;
