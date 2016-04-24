@@ -79,11 +79,12 @@
 							<div width="100%" height="100%" class="item item-2">
 								<video width="100%" controls> <!-- loop muted autoplay -->
 							        <source src="img/Complete_system_for_private_homes_-_Siedle_Select.mp4" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"">
+							        	<!-- http://samsec.fi/wp-content/uploads/2016/03/Complete_system_for_private_homes_-_Siedle_Select.mp4 -->
 						    </video>
 								<div class="hover_section">
 									<div class="container">
-										<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
-										<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
+										<!-- <a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a> -->
+										<strong>Ovipuhelin kertoo kuka oven takana on.  </strong>
 									</div>
 								</div>
 							</div>
@@ -91,24 +92,29 @@
 								<div class="hover_section">
 									<div class="container">
 										<a class="fancybox btn-survey" href="#contact">Haluan kartoituksen1</a>
-										<strong>Turvaa kotisi - pyydä meidät <span> ilmaiselle</span> kartoituskäynnille</strong>
+										<strong>Murtohälytin on kodin hermokeskus, joka valvoo puolestasi. Pyydä meidät ilmaiselle kartoituskäynnille.</strong>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
-	
 </body>
 </html>
 <script>
 	
+
+/**
+	* @file it is slider that can rotate video
+	* @author Ivan Kaduk
+	* @copyright Ivan Kaduk 2016
+	* @class
+	* @classdesc Main class of slider 
+	* 
+	*/
 var slider = function(slider){
 	this.slider_id = slider;
 	this.slider = document.getElementById(this.slider_id);
@@ -153,10 +159,15 @@ var slider = function(slider){
 				console.log(this.video_condition);
 				if(this.video_condition == 'stoped'){
 					this.video.play();
+					this.child_text = this.childNodes[0];
+					this.removeChild(this.child_text);
 					this.appendChild(document.createTextNode(' stop the video'));
 					this.video_condition = 'playing';
 				}else if(this.video_condition == 'playing'){
 					this.video.pause();
+					this.child_text = this.childNodes[0];
+					this.removeChild(this.child_text);
+					this.appendChild(document.createTextNode(' play video'));
 					console.log('stop');
 					this.video_condition = 'stoped';
 				}
@@ -311,8 +322,14 @@ var slider = function(slider){
 
 }
 
-
-
+/**
+	* @author Ivan Kaduk
+	* @copyright Ivan Kaduk 2016
+	* @class
+	* @classdesc It is addition abstraction that helps to work with slider controls
+	* 
+	* 
+	*/
 var Clicker = function(diraction, arrow_left, arrow_right){
 	this.diraction = diraction;
 	this.arrow_left = arrow_left;
