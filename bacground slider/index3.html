@@ -77,7 +77,7 @@
 								</div>
 							</div>
 							<div width="100%" height="100%" class="item item-2">
-								<video width="100%" > <!-- loop muted autoplay -->
+								<video width="100%" controls> <!-- loop muted autoplay -->
 							        <source src="img/Complete_system_for_private_homes_-_Siedle_Select.mp4" type="video/mp4; codecs="avc1.42E01E, mp4a.40.2"">
 						    </video>
 								<div class="hover_section">
@@ -129,6 +129,41 @@ var slider = function(slider){
 		this.back[i].style.width=window.innerWidth+'px';
 	};
 
+	this.video_play = new Array();
+	this.container = new Array();
+	this.strong = new Array();
+	this.video = new Array();
+	this.video_condition = new Array();
+
+	// video functional
+	for (var i = 0; i < this.back.length; i++) {
+		if(this.back[i].getElementsByTagName('video')[0]){
+			this.video[i] = this.back[i].getElementsByTagName('video')[0];
+			this.container[i] = this.back[i].getElementsByClassName('container')[0];
+			this.strong[i] = this.container[i].getElementsByTagName('strong')[0];
+			this.video_play[i] = document.createElement('a');
+			this.video_play[i].className = 'play_video';
+			this.video_play[i].href = '#';
+			this.video_play[i].appendChild(document.createTextNode(' play video'));
+			this.video_play[i].video = this.video[i];
+			this.video_condition[i] = 'stoped';
+			this.video_play[i].video_condition = this.video_condition[i];
+			this.video_play[i].video = this.video[i];
+			this.video_play[i].onclick = function(){
+				console.log(this.video_condition);
+				if(this.video_condition == 'stoped'){
+					this.video.play();
+					this.appendChild(document.createTextNode(' stop the video'));
+					this.video_condition = 'playing';
+				}else if(this.video_condition == 'playing'){
+					this.video.pause();
+					console.log('stop');
+					this.video_condition = 'stoped';
+				}
+			}
+			this.strong[i].appendChild(this.video_play[i]);
+		}
+	};
 
 	if((this.back.length>1)){
 		this.arrow_set = this.slider.appendChild(document.createElement('div'));
@@ -148,10 +183,14 @@ var slider = function(slider){
 		this.right_arrow.style.width = '50px';
 		this.left_arrow.style.top = '50%';
 		this.right_arrow.style.top = '50%';
-		this.left_arrow.style.backgroundColor = '#ff0000';
-		this.right_arrow.style.backgroundColor = '#00ff00';
+		this.left_arrow.style.backgroundColor = 'rgba(255,100,0,0.5)';
+		this.right_arrow.style.backgroundColor = 'rgba(255,100,0,0.5)';
+		this.left_arrow.style.borderRadius = '50px';
+		this.right_arrow.style.borderRadius = '50px';
+
 		this.left_arrow.style.left = '50px';
 		this.right_arrow.style.right = '50px';
+
 
 		this.hover_section = this.slider.getElementsByClassName('hover_section');
 
@@ -162,7 +201,7 @@ var slider = function(slider){
 		// this.hover_section.style.bottom = '10px';
 		// this.hover_section.style.left = '150px';
 		// this.hover_section.style.right = '150px';
-		//this.hover_section.style.zIndex = '-1';
+		// this.hover_section.style.zIndex = '-1';
 
 		this.slide_direction = 'left';
 
@@ -186,6 +225,8 @@ var slider = function(slider){
 
 	// function to sliding right
 	function slider_slid_right(margin_position_index,step_width,slider_back){
+
+			// denied clicking on button
 			clickable = false;
 			slide = setInterval(function(margin_position_index, step_width, slider_back){
 
@@ -207,6 +248,8 @@ var slider = function(slider){
 
 	// function to sliding left
 	function slider_slid_left(margin_position_index,step_width,slider_back){
+
+			// denied clicking on button
 			clickable = false;
 			slide = setInterval(function(margin_position_index, step_width, slider_back){
 
@@ -235,7 +278,7 @@ var slider = function(slider){
 				margin_position_index = margin_position_index + 1;
 			}else{
 				margin_position_index = 1;
-				slider_slid_right(margin_position_index,20,this.slider_back);
+				slider_slid_right(margin_position_index,40,this.slider_back);
 				margin_position_index = margin_position_index - 1;
 			}
 		}
@@ -249,7 +292,7 @@ var slider = function(slider){
 				margin_position_index = margin_position_index - 1;
 			}else{
 				margin_position_index = slide_back_coordinates.length-2;
-				slider_slid_left(margin_position_index,20,this.slider_back);
+				slider_slid_left(margin_position_index,40,this.slider_back);
 				margin_position_index = margin_position_index + 1;
 			}	
 		}
@@ -258,12 +301,10 @@ var slider = function(slider){
 	for (var i = 0; i < this.hover_section.length; i++) {
 		this.hover_section[i].onmouseover = function(){
 			clickable = false;
-			console.log(clickable);
 		}
 
 		this.hover_section[i].onmouseout = function(){
 			clickable = true;
-			console.log(clickable);
 		}
 	};
 
