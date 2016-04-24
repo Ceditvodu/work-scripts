@@ -4,5 +4,5 @@
   - without infinite sliding (when slider came to last slide it go back to start position);
   - arrows buttons 
   - video start/stop button
-2. "script N to P" - script that can replace "\n" sign to paragraph tag (js, oop)
+2. "script N to P" - script that can replace "\n" sign to paragraph tag (clear js, oop)
 3. "wall script" - crating monsanri effect using images. (clear js, oop)
