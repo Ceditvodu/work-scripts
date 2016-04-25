@@ -159,7 +159,7 @@
 				if(diraction == 'up')
 				{
 					height = content.clientHeight;
-					content.style.height = height - 1 + 'px';
+					content.style.height = height - 10 + 'px';
 					if(height <= 0)
 					{
 						content.style.height = '0px';
@@ -170,7 +170,7 @@
 				else if(diraction == 'down')
 				{
 					height = content.clientHeight;
-					content.style.height = height + 1 + 'px';
+					content.style.height = height + 10 + 'px';
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
