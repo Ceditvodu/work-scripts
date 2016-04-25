@@ -24,9 +24,12 @@
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 	</div>
 	<div class="content">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis id explicabo quam quo nisi nihil ducimus, possimus, in aperiam, optio repellat commodi labore. Voluptatibus explicabo tempore sapiente repudiandae! Magni, modi.</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus aliquam velit porro, harum est repellendus aperiam consequatur omnis eos vero vel placeat facere enim amet ex quae accusamus nisi.</p>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint nostrum est assumenda non porro, reiciendis, dolor dolorem maxime odio libero eius pariatur vero totam numquam fuga tempore ex obcaecati adipisci.</p>	
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis id explicabo quam quo nisi nihil ducimus, possimus, in aperiam, optio repellat commodi labore. Voluptatibus explicabo tempore sapiente repudiandae! Magni, modi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus aliquam velit porro, harum est repellendus aperiam consequatur omnis eos vero vel placeat facere enim amet ex quae accusamus nisi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint nostrum est assumenda non porro, reiciendis, dolor dolorem maxime odio libero eius pariatur vero totam numquam fuga tempore ex obcaecati adipisci.</p>	
+			
+
 	</div>
 </div>
 <div>
@@ -80,6 +83,9 @@
 		this.content = new Array();
 		this.contentHeight = new Array();
 		this.contentTextNode = new Array();
+		this.helper = new Array();
+		this.contentBody = new Array();
+
 
 		for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 		{
@@ -102,6 +108,16 @@
 			}
 
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
+				this.helper = this.content[i].innerHTML;
+				this.content[i].innerHTML = '';
+				this.contentBody[i] = document.createElement('div');
+				this.contentBody[i].innerHTML = this.helper;
+				this.contentBody[i].style.position = 'relative';
+				this.contentBody[i].style.overflow = 'hidden';
+				this.content[i].appendChild(this.contentBody[i]);
+
+				this.content[i].style.margin = '0';
+				// this.content[i].style.position = 'relative';
 				this.contentHeight[i] = this.content[i].clientHeight;
 				if(spoilerStatus == 'opened')
 				{
