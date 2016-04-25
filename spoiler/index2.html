@@ -32,6 +32,20 @@
 
 	</div>
 </div>
+
+<div class="spoiler">
+	<div class="title">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+	</div>
+	<div class="content">
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis id explicabo quam quo nisi nihil ducimus, possimus, in aperiam, optio repellat commodi labore. Voluptatibus explicabo tempore sapiente repudiandae! Magni, modi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus aliquam velit porro, harum est repellendus aperiam consequatur omnis eos vero vel placeat facere enim amet ex quae accusamus nisi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint nostrum est assumenda non porro, reiciendis, dolor dolorem maxime odio libero eius pariatur vero totam numquam fuga tempore ex obcaecati adipisci.</p>	
+			
+
+	</div>
+</div>
 <div>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis id explicabo quam quo nisi nihil ducimus, possimus, in aperiam, optio repellat commodi labore. Voluptatibus explicabo tempore sapiente repudiandae! Magni, modi.</p>
 	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus aliquam velit porro, harum est repellendus aperiam consequatur omnis eos vero vel placeat facere enim amet ex quae accusamus nisi.</p>
@@ -69,14 +83,7 @@
 			this.spoilerContentName = 'content';
 		}
 
-		if(status != undefined)
-		{
-			var spoilerStatus = status;
-		}
-		else
-		{
-			var spoilerStatus = 'closed';
-		}
+
 		
 		this.spoiler = new Array();
 		this.title = new Array();
@@ -86,18 +93,29 @@
 		this.helper = new Array();
 		this.contentBody = new Array();
 
+		this.spoilerStatus = new Array();
+
 
 		for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 		{
 			this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
 
+			if(status != undefined)
+			{
+				this.spoilerStatus[i] = status;
+			}
+			else
+			{
+				this.spoilerStatus[i] = 'closed';
+			}
+
 			if(this.title[i] = this.spoiler[i].getElementsByClassName(this.spoilerTitle)[0])
 			{
-				if(spoilerStatus == 'opened')
+				if(this.spoilerStatus[i] == 'opened')
 				{
 					this.title[i].className = this.spoilerTitle+' opened';
 				}
-				else if(spoilerStatus == "closed")
+				else if(this.spoilerStatus[i] == "closed")
 				{
 					this.title[i].className = this.spoilerTitle+' closed';
 				}
@@ -118,11 +136,11 @@
 
 
 				this.contentHeight[i] = this.content[i].clientHeight;
-				if(spoilerStatus == 'opened')
+				if(this.spoilerStatus[i] == 'opened')
 				{
 					this.content[i].style.height = this.contentHeight[i]+'px';
 				}
-				else if(spoilerStatus == "closed")
+				else if(this.spoilerStatus[i] == "closed")
 				{
 					this.content[i].style.height = '0px';
 				}
@@ -136,22 +154,24 @@
 			this.title[i].content = this.content[i];
 			this.title[i].contentHeight = this.contentHeight[i];
 			this.title[i].titleName = this.spoilerTitle;
+			this.title[i].spoilerStatus = this.spoilerStatus[i];
 			this.title[i].onclick = function()
 			{
-				if(spoilerStatus == 'closed')
+				if(this.spoilerStatus == 'closed')
 				{
-					slide(this.content,'down', this.contentHeight);
+					slide(this.content,'down', this.contentHeight, this.spoilerStatus);
 					this.className = this.titleName + ' opened';
+					
 				}
-				else if(spoilerStatus == 'opened')
+				else if(this.spoilerStatus == 'opened')
 				{
-					slide(this.content,'up', this.contentHeight);
+					slide(this.content,'up', this.contentHeight, this.spoilerStatus);
 					this.className = this.titleName + ' closed';
 				}
 			}
 		};
 
-		function slide(content, diraction, originalHeight)
+		function slide(content, diraction, originalHeight, status)
 		{
 			var interval = setInterval(function(content, diraction)
 			{
@@ -168,7 +188,7 @@
 					if(height <= 0)
 					{
 						content.style.height = '0px';
- 						spoilerStatus = 'closed';
+ 						status = 'closed';
  						clearInterval(interval);
 					}
 				}
@@ -179,7 +199,7 @@
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
-						spoilerStatus = 'opened';
+						status = 'opened';
  						clearInterval(interval);
 					}
 				}
