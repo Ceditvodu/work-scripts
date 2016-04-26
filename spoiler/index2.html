@@ -126,13 +126,13 @@
 			}
 
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
-				this.helper = this.content[i].innerHTML;
-				this.content[i].innerHTML = '';
-				this.contentBody[i] = document.createElement('div');
-				this.contentBody[i].innerHTML = this.helper;
-				this.contentBody[i].style.position = 'relative';
-				this.contentBody[i].style.overflow = 'hidden';
-				this.content[i].appendChild(this.contentBody[i]);
+				// this.helper = this.content[i].innerHTML;
+				// this.content[i].innerHTML = '';
+				// this.contentBody[i] = document.createElement('div');
+				// this.contentBody[i].innerHTML = this.helper;
+				// this.contentBody[i].style.position = 'relative';
+				// this.contentBody[i].style.overflow = 'hidden';
+				// this.content[i].appendChild(this.contentBody[i]);
 
 
 				this.contentHeight[i] = this.content[i].clientHeight;
@@ -154,24 +154,26 @@
 			this.title[i].content = this.content[i];
 			this.title[i].contentHeight = this.contentHeight[i];
 			this.title[i].titleName = this.spoilerTitle;
-			this.title[i].spoilerStatus = this.spoilerStatus[i];
+			//this.title[i].spoilerStatus = this.spoilerStatus[i];
+			this.title[i].index = i;
+			//console.log(this);
 			this.title[i].onclick = function()
 			{
-				if(this.spoilerStatus == 'closed')
+				if(window.spoiler.spoilerStatus[this.index] == 'closed')
 				{
-					slide(this.content,'down', this.contentHeight, this.spoilerStatus);
+					slide(this.content,'down', this.contentHeight, this.index);
 					this.className = this.titleName + ' opened';
-					
 				}
-				else if(this.spoilerStatus == 'opened')
+				else if(window.spoiler.spoilerStatus[this.index] == 'opened')
 				{
-					slide(this.content,'up', this.contentHeight, this.spoilerStatus);
+					slide(this.content,'up', this.contentHeight, this.index);
 					this.className = this.titleName + ' closed';
 				}
+				//console.log(window.spoiler.spoilerStatus[this.index]);
 			}
 		};
 
-		function slide(content, diraction, originalHeight, status)
+		function slide(content, diraction, originalHeight, index)
 		{
 			var interval = setInterval(function(content, diraction)
 			{
@@ -188,7 +190,7 @@
 					if(height <= 0)
 					{
 						content.style.height = '0px';
- 						status = 'closed';
+ 						window.spoiler.spoilerStatus[index] = 'closed';
  						clearInterval(interval);
 					}
 				}
@@ -199,7 +201,7 @@
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
-						status = 'opened';
+						window.spoiler.spoilerStatus[index] = 'opened';
  						clearInterval(interval);
 					}
 				}
