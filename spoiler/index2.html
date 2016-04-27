@@ -75,6 +75,7 @@
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
+	* 
 	* @classdesc this class will create spoiler.
 	* @param {String} className - class of div wich containe spoiler child elements.
 	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
@@ -148,6 +149,7 @@
 
 			// manipulation with content
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
+
 				// adding helping element for correcting hight wich will be get
 				this.helper = this.content[i].innerHTML;
 				this.content[i].innerHTML = '';
@@ -156,6 +158,7 @@
 				this.contentBody[i].style.position = 'relative';
 				this.contentBody[i].style.overflow = 'hidden';
 				this.content[i].appendChild(this.contentBody[i]);
+
 				// getting of hight
 				this.contentHeight[i] = this.content[i].clientHeight;
 
@@ -174,7 +177,7 @@
 				console.log('errore! content is not set');
 			}
 
-
+			// innitialization of on click function for title
 			this.title[i].content = this.content[i];
 			this.title[i].contentHeight = this.contentHeight[i];
 			this.title[i].titleName = this.spoilerTitle;
@@ -195,6 +198,13 @@
 			}
 		};
 
+		/**
+			* @function
+			* @name spoilerStatusCheck
+			* @param {Spoiler} object - object that contain all initialized parametrs
+			* @param {int} index -  
+			*	@return
+			*/
 		function spoilerStatusCheck(object, index)
 		{
 			return object.spoilerStatus[index];
