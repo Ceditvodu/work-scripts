@@ -71,15 +71,21 @@
 <script>
 'use strict'
 /**
+	* Simple spoiler
 	* @author Ivan Kaduk
-	* @copyright Ivan Kaduk 2016
+	* @copyright Ivan Kaduk 2016.
 	* @class
-	* @classdesc this class will create spoiler 
+	* @classdesc this class will create spoiler.
+	* @param {String} className - class of div wich containe spoiler child elements.
+	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
+	* @param {String} title - class of spoiler button
+	* @param {String} content - class of spoiler content div
 	*/
 
 	var Spoiler = function(className, status, title, content){
-		// spiler parametrs initialization
-
+		
+		// spoiler parametrs initialization
+		// standart parametrs for all elements with same className
 		this.spoilerName = className;
 		if(title != undefined)
 		{
@@ -99,18 +105,17 @@
 			this.spoilerContentName = 'content';
 		}
 
-
-		
+		// Unique parametres for every spoiler element on page with same className
+		// variable arrays innitialization, for every element
 		this.spoiler = new Array();
 		this.title = new Array();
 		this.content = new Array();
 		this.contentHeight = new Array();
 		this.helper = new Array();
 		this.contentBody = new Array();
-
 		this.spoilerStatus = new Array();
 
-
+		// start of Unique innitialization
 		for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 		{
 			this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
@@ -124,6 +129,7 @@
 				this.spoilerStatus[i] = 'closed';
 			}
 
+			// manipulation with title 
 			if(this.title[i] = this.spoiler[i].getElementsByClassName(this.spoilerTitle)[0])
 			{
 				if(this.spoilerStatus[i] == 'opened')
@@ -140,7 +146,9 @@
 				console.log('errore! title is not set');
 			}
 
+			// manipulation with content
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
+				// adding helping element for correcting hight wich will be get
 				this.helper = this.content[i].innerHTML;
 				this.content[i].innerHTML = '';
 				this.contentBody[i] = document.createElement('div');
@@ -148,9 +156,9 @@
 				this.contentBody[i].style.position = 'relative';
 				this.contentBody[i].style.overflow = 'hidden';
 				this.content[i].appendChild(this.contentBody[i]);
-
-
+				// getting of hight
 				this.contentHeight[i] = this.content[i].clientHeight;
+
 				if(this.spoilerStatus[i] == 'opened')
 				{
 					this.content[i].style.height = this.contentHeight[i]+'px';
@@ -166,10 +174,10 @@
 				console.log('errore! content is not set');
 			}
 
+
 			this.title[i].content = this.content[i];
 			this.title[i].contentHeight = this.contentHeight[i];
 			this.title[i].titleName = this.spoilerTitle;
-			this.title[i].spoilerStatus = this.spoilerStatus[i];
 			this.title[i].object = this;
 			this.title[i].index = i;
 			this.title[i].onclick = function()
