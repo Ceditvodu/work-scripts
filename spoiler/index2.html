@@ -69,6 +69,7 @@
 </html>
 
 <script>
+'use strict'
 /**
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016
@@ -104,7 +105,6 @@
 		this.title = new Array();
 		this.content = new Array();
 		this.contentHeight = new Array();
-		this.contentTextNode = new Array();
 		this.helper = new Array();
 		this.contentBody = new Array();
 
@@ -172,7 +172,6 @@
 			this.title[i].spoilerStatus = this.spoilerStatus[i];
 			this.title[i].object = this;
 			this.title[i].index = i;
-			//console.log(this);
 			this.title[i].onclick = function()
 			{
 				if(spoilerStatusCheck(this.object, this.index) == 'closed')
@@ -198,15 +197,11 @@
 			if (object.spoilerStatus[index] == 'opened') 
 			{
 				object.spoilerStatus[index] = 'closed';
-				console.log('j')
 			} 
 			else
 			{
 				object.spoilerStatus[index] = 'opened';
-				console.log('k');
 			};
-			// console.log(object);
-			// console.log(index);
 		}
 
 		function slide(content, diraction, originalHeight, index, object)
@@ -215,8 +210,8 @@
 			{
 				if(diraction == 'up')
 				{
-					height = content.clientHeight;
-					finale_height = height - 10;
+					var height = content.clientHeight;
+					var finale_height = height - 10;
 					if(finale_height < 0)
 					{
 						finale_height = 0
@@ -232,7 +227,7 @@
 				}
 				else if(diraction == 'down')
 				{
-					height = content.clientHeight;
+					var height = content.clientHeight;
 					content.style.height = height + 10 + 'px';
 					if(height >= originalHeight)
 					{
