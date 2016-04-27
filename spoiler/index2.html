@@ -33,6 +33,20 @@
 	</div>
 </div>
 
+<div class="spoiler1">
+	<div class="title2">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+	</div>
+	<div class="content3">
+
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis id explicabo quam quo nisi nihil ducimus, possimus, in aperiam, optio repellat commodi labore. Voluptatibus explicabo tempore sapiente repudiandae! Magni, modi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque doloribus aliquam velit porro, harum est repellendus aperiam consequatur omnis eos vero vel placeat facere enim amet ex quae accusamus nisi.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint nostrum est assumenda non porro, reiciendis, dolor dolorem maxime odio libero eius pariatur vero totam numquam fuga tempore ex obcaecati adipisci.</p>	
+			
+
+	</div>
+</div>
+
 <div class="spoiler">
 	<div class="title">
 		Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -64,6 +78,7 @@
 
 	var Spoiler = function(className, status, title, content){
 		// spiler parametrs initialization
+
 		this.spoilerName = className;
 		if(title != undefined)
 		{
@@ -154,26 +169,47 @@
 			this.title[i].content = this.content[i];
 			this.title[i].contentHeight = this.contentHeight[i];
 			this.title[i].titleName = this.spoilerTitle;
-			//this.title[i].spoilerStatus = this.spoilerStatus[i];
+			this.title[i].spoilerStatus = this.spoilerStatus[i];
+			this.title[i].object = this;
 			this.title[i].index = i;
 			//console.log(this);
 			this.title[i].onclick = function()
 			{
-				if(window.spoiler.spoilerStatus[this.index] == 'closed')
+				if(spoilerStatusCheck(this.object, this.index) == 'closed')
 				{
-					slide(this.content,'down', this.contentHeight, this.index);
+					slide(this.content,'down', this.contentHeight, this.index, this.object);
 					this.className = this.titleName + ' opened';
 				}
-				else if(window.spoiler.spoilerStatus[this.index] == 'opened')
+				else if(spoilerStatusCheck(this.object, this.index) == 'opened')
 				{
-					slide(this.content,'up', this.contentHeight, this.index);
+					slide(this.content,'up', this.contentHeight, this.index, this.object);
 					this.className = this.titleName + ' closed';
 				}
-				//console.log(window.spoiler.spoilerStatus[this.index]);
 			}
 		};
 
-		function slide(content, diraction, originalHeight, index)
+		function spoilerStatusCheck(object, index)
+		{
+			return object.spoilerStatus[index];
+		}
+
+		function spoilerStatusChange(object, index)
+		{
+			if (object.spoilerStatus[index] == 'opened') 
+			{
+				object.spoilerStatus[index] = 'closed';
+				console.log('j')
+			} 
+			else
+			{
+				object.spoilerStatus[index] = 'opened';
+				console.log('k');
+			};
+			// console.log(object);
+			// console.log(index);
+		}
+
+		function slide(content, diraction, originalHeight, index, object)
 		{
 			var interval = setInterval(function(content, diraction)
 			{
@@ -190,7 +226,7 @@
 					if(height <= 0)
 					{
 						content.style.height = '0px';
- 						window.spoiler.spoilerStatus[index] = 'closed';
+ 						spoilerStatusChange(object,index);
  						clearInterval(interval);
 					}
 				}
@@ -201,7 +237,7 @@
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
-						window.spoiler.spoilerStatus[index] = 'opened';
+						spoilerStatusChange(object,index);
  						clearInterval(interval);
 					}
 				}
@@ -210,4 +246,5 @@
 	}
 
 	var spoiler = new Spoiler('spoiler','opened');
+	var spoiler2 = new Spoiler('spoiler1','closed','title2','content3');
 </script>
