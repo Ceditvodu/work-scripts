@@ -141,13 +141,13 @@
 			}
 
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
-				// this.helper = this.content[i].innerHTML;
-				// this.content[i].innerHTML = '';
-				// this.contentBody[i] = document.createElement('div');
-				// this.contentBody[i].innerHTML = this.helper;
-				// this.contentBody[i].style.position = 'relative';
-				// this.contentBody[i].style.overflow = 'hidden';
-				// this.content[i].appendChild(this.contentBody[i]);
+				this.helper = this.content[i].innerHTML;
+				this.content[i].innerHTML = '';
+				this.contentBody[i] = document.createElement('div');
+				this.contentBody[i].innerHTML = this.helper;
+				this.contentBody[i].style.position = 'relative';
+				this.contentBody[i].style.overflow = 'hidden';
+				this.content[i].appendChild(this.contentBody[i]);
 
 
 				this.contentHeight[i] = this.content[i].clientHeight;
