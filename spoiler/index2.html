@@ -75,7 +75,6 @@
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
-	* 
 	* @classdesc this class will create spoiler.
 	* @param {String} className - class of div wich containe spoiler child elements.
 	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
@@ -198,18 +197,42 @@
 			}
 		};
 
-		/**
-			* @function
-			* @name spoilerStatusCheck
-			* @param {Spoiler} object - object that contain all initialized parametrs
-			* @param {int} index -  
-			*	@return
-			*/
+	/**
+		* @function
+		* @name spoilerStatusCheck
+		* @param {Spoiler} object - object that contain all initialized parametrs
+		* @param {int} index - it is index of spoiler element with current className 
+		*	@return {String} - status of current spoiler 
+		*/
 		function spoilerStatusCheck(object, index)
 		{
 			return object.spoilerStatus[index];
 		}
 
+	/**
+		* @method
+		* @name spoilerStatusCheck
+		* @param {int} index - it is index of spoiler element with current className 
+		*	@return {String} - status of current spoiler 
+		* @return {Array} - statuses of all spoilers with current className
+		*/
+		this.getStatus = function(index){
+			if (index != undefined) 
+			{
+				return this.spoilerStatus[index];
+			}
+			else
+			{
+				return this.spoilerStatus;
+			}
+		}
+
+	/**
+		* @function
+		* @name spoilerStatusChange
+		* @param {Spoiler} object - object that contain all initialized parametrs
+		* @param {int} index - it is index of spoiler element with current className 
+		*/
 		function spoilerStatusChange(object, index)
 		{
 			if (object.spoilerStatus[index] == 'opened') 
@@ -222,14 +245,27 @@
 			};
 		}
 
+	/**
+		* @function
+		* @name slide
+		* @param {Object} content - object wich containe spoiler content
+		* @param {String[up, down]} diraction - diraction of movement accordin slider condition
+		* @param {int} originalHeight - height of content in opened condition 
+		* @param {int} index - it is index of spoiler element with current className 
+		* @param {Spoiler} object - object that contain all initialized parametrs
+		*/
 		function slide(content, diraction, originalHeight, index, object)
 		{
+			// animation loop
 			var interval = setInterval(function(content, diraction)
 			{
+
+				// iteration for open action
 				if(diraction == 'up')
 				{
 					var height = content.clientHeight;
 					var finale_height = height - 10;
+
 					if(finale_height < 0)
 					{
 						finale_height = 0
@@ -243,6 +279,8 @@
  						clearInterval(interval);
 					}
 				}
+
+				// iteration for close action 
 				else if(diraction == 'down')
 				{
 					var height = content.clientHeight;
@@ -258,6 +296,9 @@
 		}
 	}
 
+	// create object wich will contrill spoilers with className 'spoiler'
 	var spoiler = new Spoiler('spoiler','opened');
+
+	// create object wich will contrill spoilers with className 'spoiler1'
 	var spoiler2 = new Spoiler('spoiler1','closed','title2','content3');
 </script>
