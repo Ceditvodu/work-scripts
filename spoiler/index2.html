@@ -78,11 +78,12 @@
 	* @classdesc this class will create spoiler.
 	* @param {String} className - class of div wich containe spoiler child elements.
 	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
+	* @param {int} velocity - velocite of slide in px per second
 	* @param {String} title - class of spoiler button
 	* @param {String} content - class of spoiler content div
 	*/
 
-	var Spoiler = function(className, status, title, content){
+	var Spoiler = function(className, status, velocity, title, content){
 		
 		// spoiler parametrs initialization
 		// standart parametrs for all elements with same className
@@ -103,6 +104,14 @@
 		else
 		{
 			this.spoilerContentName = 'content';
+		}
+		if(velocity != undefined)
+		{
+			this.velocity = velocity;
+		}
+		else
+		{
+			this.velocity = 10;
 		}
 
 		// Unique parametres for every spoiler element on page with same className
@@ -182,16 +191,17 @@
 			this.title[i].titleName = this.spoilerTitle;
 			this.title[i].object = this;
 			this.title[i].index = i;
+			this.title[i].velocity = this.velocity;
 			this.title[i].onclick = function()
 			{
 				if(spoilerStatusCheck(this.object, this.index) == 'closed')
 				{
-					slide(this.content,'down', this.contentHeight, this.index, this.object);
+					slide(this.content,'down', this.contentHeight, this.index, this.object, this.velocity);
 					this.className = this.titleName + ' opened';
 				}
 				else if(spoilerStatusCheck(this.object, this.index) == 'opened')
 				{
-					slide(this.content,'up', this.contentHeight, this.index, this.object);
+					slide(this.content,'up', this.contentHeight, this.index, this.object, this.velocity);
 					this.className = this.titleName + ' closed';
 				}
 			}
@@ -227,6 +237,29 @@
 			}
 		}
 
+		this.toggle = function(index){
+			if(index != undefined)
+			{
+			}
+			else
+			{
+				for (var i = 0; i < this.spoiler.length; i++) {
+					if(spoilerStatusCheck(this, i) == 'closed')
+					{
+						slide(this.content[i],'down', this.contentHeight[i], i, this, this.velocity);
+						this.title[i].className = this.spoilerTitle+' opened';
+					}
+					else if(spoilerStatusCheck(this, i) == 'opened')
+					{
+						slide(this.content[i],'up', this.contentHeight[i], i, this, this.velocity);
+						this.title[i].className = this.spoilerTitle+' closed';
+					}
+				};
+				console.log(this);
+
+			}
+		}
+
 	/**
 		* @function
 		* @name spoilerStatusChange
@@ -254,7 +287,7 @@
 		* @param {int} index - it is index of spoiler element with current className 
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		*/
-		function slide(content, diraction, originalHeight, index, object)
+		function slide(content, diraction, originalHeight, index, object, velocity)
 		{
 			// animation loop
 			var interval = setInterval(function(content, diraction)
@@ -264,7 +297,7 @@
 				if(diraction == 'up')
 				{
 					var height = content.clientHeight;
-					var finale_height = height - 10;
+					var finale_height = height - velocity;
 
 					if(finale_height < 0)
 					{
@@ -284,7 +317,7 @@
 				else if(diraction == 'down')
 				{
 					var height = content.clientHeight;
-					content.style.height = height + 10 + 'px';
+					content.style.height = height + velocity + 'px';
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
@@ -297,8 +330,17 @@
 	}
 
 	// create object wich will contrill spoilers with className 'spoiler'
-	var spoiler = new Spoiler('spoiler','opened');
+	var spoiler = new Spoiler('spoiler','opened', 1);
+	// Animation example for spoilers:
+	/*
+		setInterval(function(){
+			spoiler.toggle();
+		},5000)
+		setInterval(function(){
+			spoiler2.toggle();
+		},5000)
+	*/
 
 	// create object wich will contrill spoilers with className 'spoiler1'
-	var spoiler2 = new Spoiler('spoiler1','closed','title2','content3');
+	var spoiler2 = new Spoiler('spoiler1','closed', 10, 'title2','content3');
 </script>
