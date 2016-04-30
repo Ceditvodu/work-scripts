@@ -237,9 +237,24 @@
 			}
 		}
 
+	/**
+		* @method
+		* @name toggle
+		* @param {int} index - it is index of spoiler element with current className 
+		*/
 		this.toggle = function(index){
 			if(index != undefined)
 			{
+				if(spoilerStatusCheck(this, index) == 'closed')
+				{
+					slide(this.content[index],'down', this.contentHeight[index], index, this, this.velocity);
+					this.title[index].className = this.spoilerTitle+' opened';
+				}
+				else if(spoilerStatusCheck(this, index) == 'opened')
+				{
+					slide(this.content[index],'up', this.contentHeight[index], index, this, this.velocity);
+					this.title[index].className = this.spoilerTitle+' closed';
+				}
 			}
 			else
 			{
@@ -255,8 +270,6 @@
 						this.title[i].className = this.spoilerTitle+' closed';
 					}
 				};
-				console.log(this);
-
 			}
 		}
 
@@ -331,6 +344,7 @@
 
 	// create object wich will contrill spoilers with className 'spoiler'
 	var spoiler = new Spoiler('spoiler','opened', 1);
+
 	// Animation example for spoilers:
 	/*
 		setInterval(function(){
@@ -339,6 +353,19 @@
 		setInterval(function(){
 			spoiler2.toggle();
 		},5000)
+	*/
+
+	// Animation example for unique intervale benith actions:
+	/*
+		setInterval(function(){
+			spoiler.toggle(0);
+		},5000)
+		setInterval(function(){
+			spoiler.toggle(1);
+		},6000)
+		setInterval(function(){
+			spoiler2.toggle();
+		},7000)
 	*/
 
 	// create object wich will contrill spoilers with className 'spoiler1'
