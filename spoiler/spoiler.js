@@ -88,17 +88,10 @@
 			// manipulation with content
 			if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
 
-				// adding helping element for correcting hight wich will be get
-				this.helper = this.content[i].innerHTML;
-				this.content[i].innerHTML = '';
-				this.contentBody[i] = document.createElement('div');
-				this.contentBody[i].innerHTML = this.helper;
-				this.contentBody[i].style.position = 'relative';
-				this.contentBody[i].style.overflow = 'hidden';
-				this.content[i].appendChild(this.contentBody[i]);
-
 				// getting of hight
+				this.content[i].style.float = 'left';
 				this.contentHeight[i] = this.content[i].clientHeight;
+				this.content[i].style.float = null;
 
 				if(this.spoilerStatus[i] == 'opened')
 				{
