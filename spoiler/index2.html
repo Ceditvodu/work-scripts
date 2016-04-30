@@ -186,23 +186,29 @@
 			}
 
 			// innitialization of on click function for title
-			this.title[i].content = this.content[i];
-			this.title[i].contentHeight = this.contentHeight[i];
-			this.title[i].titleName = this.spoilerTitle;
 			this.title[i].object = this;
 			this.title[i].index = i;
-			this.title[i].velocity = this.velocity;
 			this.title[i].onclick = function()
 			{
 				if(spoilerStatusCheck(this.object, this.index) == 'closed')
 				{
-					slide(this.content,'down', this.contentHeight, this.index, this.object, this.velocity);
-					this.className = this.titleName + ' opened';
+					slide(this.object.content[this.index],
+								'down', 
+								this.object.contentHeight[this.index], 
+								this.index, 
+								this.object, 
+								this.object.velocity);
+					this.className = this.object.spoilerTitle + ' opened';
 				}
 				else if(spoilerStatusCheck(this.object, this.index) == 'opened')
 				{
-					slide(this.content,'up', this.contentHeight, this.index, this.object, this.velocity);
-					this.className = this.titleName + ' closed';
+					slide(this.object.content[this.index],
+								'up', 
+								this.object.contentHeight[this.index], 
+								this.index, 
+								this.object, 
+								this.object.velocity);
+					this.className = this.object.spoilerTitle + ' closed';
 				}
 			}
 		};
