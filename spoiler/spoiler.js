@@ -1,6 +1,6 @@
 'use strict'
 /**
-	* @name Simple spoiler
+	* @name Spoiler
 	* @version 2.0.0
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
@@ -216,7 +216,8 @@
 		* @return {String} - status of current spoiler 
 		* @return {Array} - statuses of all spoilers with current className
 		*/
-		this.getStatus = function(index){
+		this.getStatus = function(index)
+		{
 			if (index != undefined) 
 			{
 				return this.spoilerStatus[index];
@@ -235,7 +236,8 @@
 		* @examplespoiler.toggle();
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
-		this.toggle = function(index){
+		this.toggle = function(index)
+		{
 			if(index != undefined)
 			{
 				if(spoilerStatusCheck(this, index) == 'closed')
