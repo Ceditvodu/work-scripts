@@ -1,10 +1,12 @@
 'use strict'
 /**
-	* Simple spoiler
+	* @name Simple spoiler
+	* @version 2.0.0
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
 	* @classdesc this class will create spoiler.
+	* @example // var spoiler = new Spoiler('spoiler','opened', 1);
 	* @param {String} className - class of div wich containe spoiler child elements.
 	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
 	* @param {int} velocity - velocite of slide in px per second
@@ -16,47 +18,102 @@
 		
 		// spoiler parametrs initialization
 		// standart parametrs for all elements with same className
+	/**
+		* @public
+		*/
 		this.spoilerName = className;
 		if(title != undefined)
 		{
+	/**
+		* @public
+		*/
 			this.spoilerTitle = title;
 		}
 		else
 		{
+		/**
+			* @default
+			* @public
+			*/
 			this.spoilerTitle = 'title';
 		}
 
 		if(content != undefined)
 		{
+		/**
+			* @public
+			*/
 			this.spoilerContentName = content;
 		}
 		else
 		{
+		/**
+			* @default
+			* @public
+			*/
 			this.spoilerContentName = 'content';
 		}
 		if(velocity != undefined)
 		{
+		/**
+			* @public
+			*/
 			this.velocity = velocity;
 		}
 		else
 		{
+		/**
+			* @default
+			* @public
+			*/
 			this.velocity = 10;
 		}
 
 		// Unique parametres for every spoiler element on page with same className
 		// variable arrays innitialization, for every element
+	/**
+		* @public
+		*/
 		this.spoiler = new Array();
+	/**
+		* @public
+		*/
 		this.title = new Array();
+	/**
+		* @public
+		*/
 		this.content = new Array();
+	/**
+		* @public
+		*/
 		this.contentHeight = new Array();
+	/**
+		* @public
+		*/
 		this.helper = new Array();
+	/**
+		* @public
+		*/
 		this.contentBody = new Array();
+	/**
+		* @public
+		*/
 		this.spoilerStatus = new Array();
+	/**
+		* @public
+		*/
+		this.clickable = new Array();
 
 		// start of Unique innitialization
 		for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 		{
 			this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
+
+			// set that spoiler is ready for clicking
+		/**
+			* @default
+			*/
+			this.clickable[i] = 'true';
 
 			if(status != undefined)
 			{
@@ -64,13 +121,18 @@
 			}
 			else
 			{
+			/**
+				* @default
+				*/
 				this.spoilerStatus[i] = 'closed';
 			}
 
 			// manipulation with title 
 			if(this.title[i] = this.spoiler[i].getElementsByClassName(this.spoilerTitle)[0])
 			{
+				// set pointer cursor for title
 				this.title[i].style.cursor = 'pointer';
+
 				if(this.spoilerStatus[i] == 'opened')
 				{
 					this.title[i].className = this.spoilerTitle+' opened';
@@ -111,34 +173,44 @@
 			// innitialization of on click function for title
 			this.title[i].object = this;
 			this.title[i].index = i;
+
+		/**
+			* @event title#onclick
+			*/
 			this.title[i].onclick = function()
 			{
-				if(spoilerStatusCheck(this.object, this.index) == 'closed')
+				if(this.object.clickable)
 				{
-					slide(this.object.content[this.index],
-								'down', 
-								this.object.contentHeight[this.index], 
-								this.index, 
-								this.object, 
-								this.object.velocity);
-					this.className = this.object.spoilerTitle + ' opened';
-				}
-				else if(spoilerStatusCheck(this.object, this.index) == 'opened')
-				{
-					slide(this.object.content[this.index],
-								'up', 
-								this.object.contentHeight[this.index], 
-								this.index, 
-								this.object, 
-								this.object.velocity);
-					this.className = this.object.spoilerTitle + ' closed';
+					if(spoilerStatusCheck(this.object, this.index) == 'closed')
+					{
+						slide(this.object.content[this.index],
+									'down', 
+									this.object.contentHeight[this.index], 
+									this.index, 
+									this.object, 
+									this.object.velocity);
+						this.className = this.object.spoilerTitle + ' opened';
+					}
+					else if(spoilerStatusCheck(this.object, this.index) == 'opened')
+					{
+						slide(this.object.content[this.index],
+									'up', 
+									this.object.contentHeight[this.index], 
+									this.index, 
+									this.object, 
+									this.object.velocity);
+						this.className = this.object.spoilerTitle + ' closed';
+					}
 				}
 			}
 		};
 
 	/**
+		* @private
 		* @function
 		* @name spoilerStatusCheck
+		* @description returning status of spoiler (opened, closed)
+		* @example // spoilerStatusCheck(this, i);
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		* @return {String} - status of current spoiler 
@@ -149,8 +221,11 @@
 		}
 
 	/**
+		* @public
 		* @method
 		* @name spoilerStatusCheck
+		* @description returning status of spoiler (opened, closed)
+		* @example // spoiler.getStatus(0);
 		* @param {int} index - it is index of spoiler element with current className 
 		* @return {String} - status of current spoiler 
 		* @return {Array} - statuses of all spoilers with current className
@@ -167,8 +242,11 @@
 		}
 
 	/**
+		* @public
 		* @method
 		* @name toggle
+		* @description toggle spoiler element
+		* @example //spoiler.toggle();
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
 		this.toggle = function(index){
@@ -203,8 +281,11 @@
 		}
 
 	/**
+		* @private
 		* @function
 		* @name spoilerStatusChange
+		* @description change spoiler status according it previous status
+		* @example // spoilerStatusChange(this, i);
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
@@ -221,8 +302,11 @@
 		}
 
 	/**
+		* @private
 		* @function
 		* @name slide
+		* @description closing/opening functional of slider
+		* @example // slide(this.object.content[this.index], 'down', this.object.contentHeight[this.index], this.index, this.object, this.object.velocity);
 		* @param {Object} content - object wich containe spoiler content
 		* @param {String} diraction - diraction of movement accordin slider condition
 		* @param {int} originalHeight - height of content in opened condition 
@@ -232,24 +316,35 @@
 		function slide(content, diraction, originalHeight, index, object, velocity)
 		{
 			// animation loop
+		/**
+			* @privat
+			*/
 			var interval = setInterval(function(content, diraction)
 			{
 
 				// iteration for open action
 				if(diraction == 'up')
 				{
+				/**
+					* @privat
+					*/
 					var height = content.clientHeight;
+				/**
+					* @privat
+					*/
 					var finale_height = height - velocity;
 
 					if(finale_height < 0)
 					{
 						finale_height = 0
+						clickable(object, index, false);
 					}
 					content.style.height = finale_height + 'px';
 
 					if(height <= 0)
 					{
 						content.style.height = '0px';
+						clickable(object, index, true);
  						spoilerStatusChange(object,index);
  						clearInterval(interval);
 					}
@@ -258,16 +353,43 @@
 				// iteration for close action 
 				else if(diraction == 'down')
 				{
+				/**
+					* @privat
+					*/
 					var height = content.clientHeight;
+					clickable(object, index, false);
 					content.style.height = height + velocity + 'px';
 					if(height >= originalHeight)
 					{
 						content.style.height = originalHeight + 'px';
+						clickable(object, index, true);
 						spoilerStatusChange(object,index);
  						clearInterval(interval);
 					}
 				}
 			}, 1, content, diraction)
+		}
+
+	/**
+		* @private
+		* @function
+		* @name clickable
+		* @description seting clickable condition for current spoiler
+		* @example // clicable(this, index, true);
+		* @param {Spoiler} object - object that contain all initialized parametrs
+		* @param {int} index - it is index of spoiler element with current className 
+		* @param {boolean} condition - clicable condition of spoiler title
+		*/
+		function clickable(object, index, condition)
+		{
+			if(condition == true)
+			{
+				object.clickable[index] = true;
+			}
+			else if (condition == false)
+			{
+				object.clickable[index] = false;
+			}
 		}
 	}
 
