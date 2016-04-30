@@ -7,6 +7,7 @@
   - create a simple automatic fetures;
   - good background for creation more difficult elements bassed on it;
   - [example](https://codepen.io/Ceditvodu/full/yORmaO/)
+  - [referanse](https://github.com/Ceditvodu/work-scripts/wiki/Spoiler)
 2. "background slider" - script that create slider (clear js, oop)
   - without infinite sliding (when slider came to last slide it go back to start position);
   - arrow buttons; 
