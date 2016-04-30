@@ -141,7 +141,7 @@
 		* @name spoilerStatusCheck
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
-		*	@return {String} - status of current spoiler 
+		* @return {String} - status of current spoiler 
 		*/
 		function spoilerStatusCheck(object, index)
 		{
@@ -152,7 +152,7 @@
 		* @method
 		* @name spoilerStatusCheck
 		* @param {int} index - it is index of spoiler element with current className 
-		*	@return {String} - status of current spoiler 
+		* @return {String} - status of current spoiler 
 		* @return {Array} - statuses of all spoilers with current className
 		*/
 		this.getStatus = function(index){
