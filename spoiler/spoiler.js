@@ -6,7 +6,7 @@
 	* @copyright Ivan Kaduk 2016.
 	* @class
 	* @classdesc this class will create spoiler.
-	* @example // var spoiler = new Spoiler('spoiler','opened', 1);
+	* @example var spoiler = new Spoiler('spoiler','opened', 1);
 	* @param {String} className - class of div wich containe spoiler child elements.
 	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
 	* @param {int} velocity - velocite of slide in px per second
@@ -90,14 +90,6 @@
 	/**
 		* @public
 		*/
-		this.helper = new Array();
-	/**
-		* @public
-		*/
-		this.contentBody = new Array();
-	/**
-		* @public
-		*/
 		this.spoilerStatus = new Array();
 	/**
 		* @public
@@ -110,9 +102,6 @@
 			this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
 
 			// set that spoiler is ready for clicking
-		/**
-			* @default
-			*/
 			this.clickable[i] = 'true';
 
 			if(status != undefined)
@@ -121,9 +110,6 @@
 			}
 			else
 			{
-			/**
-				* @default
-				*/
 				this.spoilerStatus[i] = 'closed';
 			}
 
@@ -210,7 +196,7 @@
 		* @function
 		* @name spoilerStatusCheck
 		* @description returning status of spoiler (opened, closed)
-		* @example // spoilerStatusCheck(this, i);
+		* @example spoilerStatusCheck(this, i);
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		* @return {String} - status of current spoiler 
@@ -223,9 +209,9 @@
 	/**
 		* @public
 		* @method
-		* @name spoilerStatusCheck
+		* @name getStatus
 		* @description returning status of spoiler (opened, closed)
-		* @example // spoiler.getStatus(0);
+		* @example spoiler.getStatus(0);
 		* @param {int} index - it is index of spoiler element with current className 
 		* @return {String} - status of current spoiler 
 		* @return {Array} - statuses of all spoilers with current className
@@ -246,7 +232,7 @@
 		* @method
 		* @name toggle
 		* @description toggle spoiler element
-		* @example //spoiler.toggle();
+		* @examplespoiler.toggle();
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
 		this.toggle = function(index){
@@ -285,7 +271,7 @@
 		* @function
 		* @name spoilerStatusChange
 		* @description change spoiler status according it previous status
-		* @example // spoilerStatusChange(this, i);
+		* @example spoilerStatusChange(this, i);
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
@@ -306,7 +292,7 @@
 		* @function
 		* @name slide
 		* @description closing/opening functional of slider
-		* @example // slide(this.object.content[this.index], 'down', this.object.contentHeight[this.index], this.index, this.object, this.object.velocity);
+		* @example slide(this.object.content[this.index], 'down', this.object.contentHeight[this.index], this.index, this.object, this.object.velocity);
 		* @param {Object} content - object wich containe spoiler content
 		* @param {String} diraction - diraction of movement accordin slider condition
 		* @param {int} originalHeight - height of content in opened condition 
@@ -375,7 +361,7 @@
 		* @function
 		* @name clickable
 		* @description seting clickable condition for current spoiler
-		* @example // clicable(this, index, true);
+		* @example clicable(this, index, true);
 		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		* @param {boolean} condition - clicable condition of spoiler title
