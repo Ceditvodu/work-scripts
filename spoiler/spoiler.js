@@ -24,9 +24,6 @@
 		this.spoilerName = className;
 		if(title != undefined)
 		{
-	/**
-		* @public
-		*/
 			this.spoilerTitle = title;
 		}
 		else
@@ -40,9 +37,6 @@
 
 		if(content != undefined)
 		{
-		/**
-			* @public
-			*/
 			this.spoilerContentName = content;
 		}
 		else
@@ -55,9 +49,6 @@
 		}
 		if(velocity != undefined)
 		{
-		/**
-			* @public
-			*/
 			this.velocity = velocity;
 		}
 		else
@@ -233,7 +224,7 @@
 		* @method
 		* @name toggle
 		* @description toggle spoiler element
-		* @examplespoiler.toggle();
+		* @example spoiler.toggle();
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
 		this.toggle = function(index)
