@@ -1,7 +1,7 @@
 'use strict'
 /**
 	* @name Spoiler
-	* @version 2.0.0
+	* @version 2.0.1
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
@@ -400,3 +400,5 @@
 
 	// create object wich will contrill spoilers with className 'spoiler1'
 	var spoiler2 = new Spoiler('spoiler1','closed', 10, 'title2','content3');
+
+	var spoiler3 = new Spoiler('spoiler2','closed', 1, 'title3','content4');

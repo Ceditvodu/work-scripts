@@ -9,21 +9,7 @@
 ## Members
 
 <dl>
-<dt><a href="#spoilerName">spoilerName</a></dt>
-<dd></dd>
-<dt><a href="#spoilerTitle">spoilerTitle</a></dt>
-<dd></dd>
-<dt><a href="#spoilerContentName">spoilerContentName</a></dt>
-<dd></dd>
 <dt><a href="#velocity">velocity</a></dt>
-<dd></dd>
-<dt><a href="#spoiler">spoiler</a></dt>
-<dd></dd>
-<dt><a href="#title">title</a></dt>
-<dd></dd>
-<dt><a href="#content">content</a></dt>
-<dd></dd>
-<dt><a href="#contentHeight">contentHeight</a></dt>
 <dd></dd>
 <dt><a href="#spoilerStatus">spoilerStatus</a></dt>
 <dd></dd>
@@ -51,6 +37,17 @@ this class will create spoiler.
 **Version**: 2.0.0  
 **Author:** Ivan Kaduk  
 **Copyright**: Ivan Kaduk 2016.  
+
+* [Spoiler](#Spoiler)
+    * [new Spoiler(className, status, velocity, title, content)](#new_Spoiler_new)
+    * [~spoilerName](#Spoiler..spoilerName)
+    * [~spoilerTitle](#Spoiler..spoilerTitle)
+    * [~spoilerContentName](#Spoiler..spoilerContentName)
+    * [~spoiler](#Spoiler..spoiler)
+    * [~title](#Spoiler..title)
+    * [~content](#Spoiler..content)
+    * [~contentHeight](#Spoiler..contentHeight)
+
 <a name="new_Spoiler_new"></a>
 
 ### new Spoiler(className, status, velocity, title, content)
@@ -67,52 +64,48 @@ this class will create spoiler.
 ```js
 var spoiler = new Spoiler('spoiler','opened', 1);
 ```
-<a name="spoilerName"></a>
+<a name="Spoiler..spoilerName"></a>
 
-## spoilerName
-**Kind**: global variable  
-**Access:** public  
-<a name="spoilerTitle"></a>
+### Spoiler~spoilerName
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
+<a name="Spoiler..spoilerTitle"></a>
 
-## spoilerTitle
-**Kind**: global variable  
+### Spoiler~spoilerTitle
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
 **Default**: <code>title</code>  
-**Access:** public  
-<a name="spoilerContentName"></a>
+**Privat**:   
+<a name="Spoiler..spoilerContentName"></a>
 
-## spoilerContentName
-**Kind**: global variable  
+### Spoiler~spoilerContentName
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
 **Default**: <code>content</code>  
-**Access:** public  
+**Privat**:   
+<a name="Spoiler..spoiler"></a>
+
+### Spoiler~spoiler
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
+<a name="Spoiler..title"></a>
+
+### Spoiler~title
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
+<a name="Spoiler..content"></a>
+
+### Spoiler~content
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
+<a name="Spoiler..contentHeight"></a>
+
+### Spoiler~contentHeight
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
 <a name="velocity"></a>
 
 ## velocity
 **Kind**: global variable  
 **Default**: <code>10</code>  
-**Access:** public  
-<a name="spoiler"></a>
-
-## spoiler
-**Kind**: global variable  
-**Access:** public  
-<a name="title"></a>
-
-## title
-**Kind**: global variable  
-**Access:** public  
-<a name="title+event_onclick"></a>
-
-### "onclick"
-**Kind**: event emitted by <code>[title](#title)</code>  
-<a name="content"></a>
-
-## content
-**Kind**: global variable  
-**Access:** public  
-<a name="contentHeight"></a>
-
-## contentHeight
-**Kind**: global variable  
 **Access:** public  
 <a name="spoilerStatus"></a>
 
