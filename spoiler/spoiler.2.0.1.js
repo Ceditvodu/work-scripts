@@ -14,7 +14,7 @@
 	* @param {String} content - class of spoiler content div
 	*/
 
-	var Spoiler = function(className, status, velocity, title, content){
+	var Spoiler = function(className, status, velocity, content, title, alternative_title){
 		
 		// spoiler parametrs initialization
 		// standart parametrs for all elements with same className
@@ -33,6 +33,11 @@
 			* @privat
 			*/
 			var spoilerTitle = 'title';
+		}
+
+		if(title != undefined)
+		{
+			var secondTitle = alternative_title;
 		}
 
 		if(content != undefined)
@@ -73,11 +78,19 @@
 	/**
 		* @privat
 		*/
+		var secondtitle = new Array();
+	/**
+		* @privat
+		*/
 		var content = new Array();
 	/**
 		* @privat
 		*/
 		var contentHeight = new Array();
+	/**
+		* @privat
+		*/
+		var titleText = new Array();
 	/**
 		* @public
 		*/
@@ -124,6 +137,15 @@
 				console.log('errore! title is not set');
 			}
 
+			if(secondtitle[i] = spoiler[i].getElementsByClassName(secondTitle)[0])
+			{
+				secondtitle[i].style.display = 'none';
+			}
+			else
+			{
+				secondtitle[i] = false;
+			}
+
 			// manipulation with content
 			if(content[i] = spoiler[i].getElementsByClassName(spoilerContentName)[0]){
 
@@ -167,6 +189,8 @@
 									this.object, 
 									this.object.velocity);
 						this.className = spoilerTitle + ' opened';
+						
+						secondtitletoggle(this.index);
 					}
 					else if(spoilerStatusCheck(this.object, this.index) == 'opened')
 					{
@@ -177,6 +201,8 @@
 									this.object, 
 									this.object.velocity);
 						this.className = spoilerTitle + ' closed';
+
+						secondtitletoggle(this.index);
 					}
 				}
 			}
@@ -370,7 +396,29 @@
 				object.clickable[index] = false;
 			}
 		}
+
+	/**
+		* @private
+		* @function
+		* @name secondtitletoggle
+		* @description toggling of title text
+		* @example secondtitletoggle(index);
+		* @param {int} index - it is index of spoiler element with current className 
+		*/
+		function secondtitletoggle(index)
+		{
+			if(secondtitle[index] != false){
+				titleText[index] = secondtitle[index].innerHTML;
+				secondtitle[index].innerHTML = title[index].innerHTML;
+				title[index].innerHTML = titleText[index];
+			}
+			else
+			{
+				console.log('error! secondtitle is not set');	
+			}
+		}
 	}
+
 
 	// create object wich will contrill spoilers with className 'spoiler'
 	var spoiler = new Spoiler('spoiler','opened', 1);
@@ -399,6 +447,6 @@
 	*/
 
 	// create object wich will contrill spoilers with className 'spoiler1'
-	var spoiler2 = new Spoiler('spoiler1','closed', 10, 'title2','content3');
+	var spoiler2 = new Spoiler('spoiler1','closed', 10, 'content3', 'title2');
 
-	var spoiler3 = new Spoiler('spoiler2','closed', 1, 'title3','content4');
+	var spoiler3 = new Spoiler('spoiler2','closed', 1,'content4', 'title3', 'title4');

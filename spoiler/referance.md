@@ -34,7 +34,7 @@
 this class will create spoiler.
 
 **Kind**: global class  
-**Version**: 2.0.0  
+**Version**: 2.0.1  
 **Author:** Ivan Kaduk  
 **Copyright**: Ivan Kaduk 2016.  
 
@@ -45,8 +45,10 @@ this class will create spoiler.
     * [~spoilerContentName](#Spoiler..spoilerContentName)
     * [~spoiler](#Spoiler..spoiler)
     * [~title](#Spoiler..title)
+    * [~secondtitle](#Spoiler..secondtitle)
     * [~content](#Spoiler..content)
     * [~contentHeight](#Spoiler..contentHeight)
+    * [~titleText](#Spoiler..titleText)
 
 <a name="new_Spoiler_new"></a>
 
@@ -91,6 +93,11 @@ var spoiler = new Spoiler('spoiler','opened', 1);
 ### Spoiler~title
 **Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
 **Privat**:   
+<a name="Spoiler..secondtitle"></a>
+
+### Spoiler~secondtitle
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
 <a name="Spoiler..content"></a>
 
 ### Spoiler~content
@@ -99,6 +106,11 @@ var spoiler = new Spoiler('spoiler','opened', 1);
 <a name="Spoiler..contentHeight"></a>
 
 ### Spoiler~contentHeight
+**Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
+**Privat**:   
+<a name="Spoiler..titleText"></a>
+
+### Spoiler~titleText
 **Kind**: inner property of <code>[Spoiler](#Spoiler)</code>  
 **Privat**:   
 <a name="velocity"></a>
