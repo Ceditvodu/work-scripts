@@ -6,6 +6,8 @@
   - choose velocity of sliding for each spoiler group;
   - create a simple automatic fetures;
   - good background for creation more difficult elements bassed on it;
+  - creating half size spoiler;
+  - title text changing on toggle;
   - [example](https://codepen.io/Ceditvodu/full/yORmaO/)
   - [referanse](https://github.com/Ceditvodu/work-scripts/wiki/Spoiler)
 2. "background slider" - script that create slider (clear js, oop)
