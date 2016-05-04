@@ -1,7 +1,7 @@
 'use strict'
 /**
 	* @name Spoiler
-	* @version 2.0.1
+	* @version 2.0.2
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
@@ -418,6 +418,39 @@
 			}
 		}
 	}
+
+	// Creating new child class for tabed fetures
+/**
+	* @name Accordion_Spoiler
+	* @class
+	* @augments Spoiler
+	* @classdesc 
+	* @example var tab = new Accordion_Spoiler('spoiler6','opened',1);
+	* @param {String} className - class of div wich containe spoiler child elements.
+	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
+	* @param {int} velocity - velocite of slide in px per second
+	* @param {String} title - class of spoiler button
+	* @param {String} content - class of spoiler content div
+	*/
+	var Accordion_Spoiler = function(className, status, velocity, content, title, alternative_title){
+		// applying all from parent class
+		Spoiler.apply(this, arguments);
+
+
+
+		console.log(this);
+	}
+
+	// prototype parent class
+	Accordion_Spoiler.prototype = Object.create(Spoiler.prototype);
+
+	// applying constructor
+	Accordion_Spoiler.prototype.constructor = Accordion_Spoiler;
+
+	// creating tab object
+	var tab = new Accordion_Spoiler('accordion','opened',1);
+
+
 
 
 	// create object wich will contrill spoilers with className 'spoiler'
