@@ -20,38 +20,42 @@
 		// spoiler parametrs initialization
 		// standart parametrs for all elements with same className
 		/**
-			* @privat
+			* @public
 			*/
-			var spoilerName = className;
+			this.spoilerName = className;
 			if(title != undefined)
 			{
-				var spoilerTitle = title;
+				this.spoilerTitle = title;
 			}
 			else
 			{
 			/**
 				* @default
-				* @privat
+				* @public
 				*/
-				var spoilerTitle = 'title';
+				this.spoilerTitle = 'title';
 			}
 
-			if(title != undefined)
+			if(alternative_title != undefined)
 			{
 				var secondTitle = alternative_title;
+			}
+			else
+			{
+				var secondTitle = false;
 			}
 
 			if(content != undefined)
 			{
-				var spoilerContentName = content;
+				this.spoilerContentName = content;
 			}
 			else
 			{
 			/**
 				* @default
-				* @privat
+				* @public
 				*/
-				var spoilerContentName = 'content';
+				this.spoilerContentName = 'content';
 			}
 			if(velocity != undefined)
 			{
@@ -69,29 +73,29 @@
 			// Unique parametres for every spoiler element on page with same className
 			// variable arrays innitialization, for every element
 		/**
-			* @privat
+			* @public
 			*/
-			var spoiler = new Array();
+			this.spoiler = new Array();
 		/**
-			* @privat
+			* @public
 			*/
-			var title = new Array();
+			this.title = new Array();
 		/**
-			* @privat
+			* @public
 			*/
-			var secondtitle = new Array();
+			this.secondtitle = new Array();
 		/**
-			* @privat
+			* @public
 			*/
-			var content = new Array();
+			this.content = new Array();
 		/**
-			* @privat
+			* @public
 			*/
-			var contentHeight = new Array();
+			this.contentHeight = new Array();
 		/**
-			* @privat
+			* @public
 			*/
-			var titleText = new Array();
+			this.titleText = new Array();
 		/**
 			* @public
 			*/
@@ -102,9 +106,9 @@
 			this.clickable = new Array();
 
 			// start of Unique innitialization
-			for (var i = 0; i < document.getElementsByClassName(spoilerName).length; i++) 
+			for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 			{
-				spoiler[i] = document.getElementsByClassName(spoilerName)[i];
+				this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
 
 				// set that spoiler is ready for clicking
 				this.clickable[i] = 'true';
@@ -119,18 +123,18 @@
 				}
 
 				// manipulation with title 
-				if(title[i] = spoiler[i].getElementsByClassName(spoilerTitle)[0])
+				if(this.title[i] = this.spoiler[i].getElementsByClassName(this.spoilerTitle)[0])
 				{
 					// set pointer cursor for title
-					title[i].style.cursor = 'pointer';
+					this.title[i].style.cursor = 'pointer';
 
 					if(this.spoilerStatus[i] == 'opened')
 					{
-						title[i].className = spoilerTitle+' opened';
+						this.title[i].className = this.spoilerTitle+' opened';
 					}
 					else if(this.spoilerStatus[i] == "closed")
 					{
-						title[i].className = spoilerTitle+' closed';
+						this.title[i].className = this.spoilerTitle+' closed';
 					}
 				}
 				else
@@ -138,32 +142,32 @@
 					console.log('errore! title is not set');
 				}
 
-				if(secondtitle[i] = spoiler[i].getElementsByClassName(secondTitle)[0])
+				if(this.secondtitle[i] = this.spoiler[i].getElementsByClassName(secondTitle)[0])
 				{
-					secondtitle[i].style.display = 'none';
+					this.secondtitle[i].style.display = 'none';
 				}
 				else
 				{
-					secondtitle[i] = false;
+					this.secondtitle[i] = false;
 				}
 
 				// manipulation with content
-				if(content[i] = spoiler[i].getElementsByClassName(spoilerContentName)[0]){
+				if(this.content[i] = this.spoiler[i].getElementsByClassName(this.spoilerContentName)[0]){
 
 					// getting of hight
-					content[i].style.float = 'left';
-					contentHeight[i] = content[i].clientHeight;
-					content[i].style.float = null;
+					this.content[i].style.float = 'left';
+					this.contentHeight[i] = this.content[i].clientHeight;
+					this.content[i].style.float = null;
 
 					if(this.spoilerStatus[i] == 'opened')
 					{
-						content[i].style.height = contentHeight[i]+'px';
+						this.content[i].style.height = this.contentHeight[i]+'px';
 					}
 					else if(this.spoilerStatus[i] == "closed")
 					{
-						content[i].style.height = '0px';
+						this.content[i].style.height = '0px';
 					}
-					content[i].style.overflow = 'hidden';
+					this.content[i].style.overflow = 'hidden';
 				}
 				else
 				{
@@ -171,39 +175,39 @@
 				}
 
 				// innitialization of on click function for title
-				title[i].object = this;
-				title[i].index = i;
+				this.title[i].object = this;
+				this.title[i].index = i;
 
 			/**
 				* @event title#onclick
 				*/
-				title[i].onclick = function()
+				this.title[i].onclick = function()
 				{
 					if(this.object.clickable)
 					{
 						if(spoilerStatusCheck(this.object, this.index) == 'closed')
 						{
-							slide(content[this.index],
+							slide(this.object.content[this.index],
 										'down', 
-										contentHeight[this.index], 
+										this.object.contentHeight[this.index], 
 										this.index, 
 										this.object, 
 										this.object.velocity);
-							this.className = spoilerTitle + ' opened';
+							this.className = this.object.spoilerTitle + ' opened';
 							
-							secondtitletoggle(this.index);
+							secondtitletoggle(this.object, this.index);
 						}
 						else if(spoilerStatusCheck(this.object, this.index) == 'opened')
 						{
-							slide(content[this.index],
+							slide(this.object.content[this.index],
 										'up', 
-										contentHeight[this.index], 
+										this.object.contentHeight[this.index], 
 										this.index, 
 										this.object, 
 										this.object.velocity);
-							this.className = spoilerTitle + ' closed';
+							this.className = this.object.spoilerTitle + ' closed';
 
-							secondtitletoggle(this.index);
+							secondtitletoggle(this.object, this.index);
 						}
 					}
 				}
@@ -222,13 +226,13 @@
 				{
 					if(spoilerStatusCheck(this, index) == 'closed')
 					{
-						slide(content[index],'down', contentHeight[index], index, this, this.velocity);
-						title[index].className = spoilerTitle+' opened';
+						slide(this.content[index],'down', this.contentHeight[index], index, this, this.velocity);
+						this.title[index].className = this.spoilerTitle+' opened';
 					}
 					else if(spoilerStatusCheck(this, index) == 'opened')
 					{
-						slide(content[index],'up', contentHeight[index], index, this, this.velocity);
-						title[index].className = spoilerTitle+' closed';
+						slide(this.content[index],'up', this.contentHeight[index], index, this, this.velocity);
+						this.title[index].className = this.spoilerTitle+' closed';
 					}
 				}
 				else
@@ -236,13 +240,13 @@
 					for (var i = 0; i < this.spoiler.length; i++) {
 						if(spoilerStatusCheck(this, i) == 'closed')
 						{
-							slide(content[i],'down', contentHeight[i], i, this, this.velocity);
-							title[i].className = spoilerTitle+' opened';
+							slide(this.content[i],'down', this.contentHeight[i], i, this, this.velocity);
+							this.title[i].className = this.spoilerTitle+' opened';
 						}
 						else if(spoilerStatusCheck(this, i) == 'opened')
 						{
-							slide(content[i],'up', contentHeight[i], i, this, this.velocity);
-							title[i].className = spoilerTitle+' closed';
+							slide(this.content[i],'up', this.contentHeight[i], i, this, this.velocity);
+							this.title[i].className = this.spoilerTitle+' closed';
 						}
 					};
 				}
@@ -380,6 +384,9 @@
 				}
 			}, 1, content, diraction)
 		}
+		Spoiler.prototype.slide = function(content, diraction, originalHeight, index, object, velocity){
+			return slide.call(this, content, diraction, originalHeight, index, object, velocity);
+		}
 
 	/**
 		* @private
@@ -409,14 +416,15 @@
 		* @name secondtitletoggle
 		* @description toggling of title text
 		* @example secondtitletoggle(index);
+		* @param {Spoiler} object - object that contain all initialized parametrs
 		* @param {int} index - it is index of spoiler element with current className 
 		*/
-		function secondtitletoggle(index)
+		function secondtitletoggle(object, index)
 		{
-			if(secondtitle[index] != false){
-				titleText[index] = secondtitle[index].innerHTML;
-				secondtitle[index].innerHTML = title[index].innerHTML;
-				title[index].innerHTML = titleText[index];
+			if(object.secondtitle[index] != false){
+				object.titleText[index] = object.secondtitle[index].innerHTML;
+				object.secondtitle[index].innerHTML = object.title[index].innerHTML;
+				object.title[index].innerHTML = object.titleText[index];
 			}
 			else
 			{
@@ -428,30 +436,6 @@
 		return Spoiler;
 	})();
 
-	// Creating new child class for tabed fetures
-/**
-	* @name Accordion_Spoiler
-	* @class
-	* @augments Spoiler
-	* @classdesc 
-	* @example var tab = new Accordion_Spoiler('spoiler6','opened',1);
-	* @param {String} className - class of div wich containe spoiler child elements.
-	* @param {String} status - start status of spoiler, it can be 'opened' or 'closed'.
-	* @param {int} velocity - velocite of slide in px per second
-	* @param {String} title - class of spoiler button
-	* @param {String} content - class of spoiler content div
-	*/
-	var Accordion_Spoiler = function(className, status, velocity, content, title, alternative_title){
-		// applying all from parent class
-		Spoiler.apply(this, arguments);
-		console.log(Spoiler.prototype.spoilerStatusCheck(this, 0));
-		//f();
-	}
 
-	// prototype parent class
-	Accordion_Spoiler.prototype = Object.create(Spoiler.prototype);
-
-	// applying constructor
-	Accordion_Spoiler.prototype.constructor = Accordion_Spoiler;
 
 	

@@ -1,13 +1,5 @@
-xhr = new XMLHttpRequest();
-xhr.open("GET", "spoiler.2.0.3.js", false);
-xhr.send();
-eval(xhr.responseText);
-
-// creating tab object
-	var accordion = new Accordion_Spoiler('accordion','opened',1);
-
-
-
+	// creating tab object
+	var accordion = new Accordion('accordion','opened',1);
 
 	// create object wich will contrill spoilers with className 'spoiler'
 	var spoiler = new Spoiler('spoiler','opened', 1);
