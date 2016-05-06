@@ -6,6 +6,9 @@
   - choose velocity of sliding for each spoiler group;
   - create a simple automatic fetures;
   - good background for creation more difficult elements bassed on it;
+    - spoiler;
+    - half content spoiler;
+    - accordion.
   - creating half size spoiler;
   - title text changing on toggle;
   - [example](http://s.codepen.io/Ceditvodu/debug/yORmaO)
