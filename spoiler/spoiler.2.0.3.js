@@ -211,6 +211,21 @@
 						}
 					}
 				}
+
+
+				window.onresize = function(){
+						console.log(this.Spoiler);
+					
+					for (var i = 0; i < document.getElementsByClassName(this.spoiler).length; i++) 
+					{
+
+						this.contentHeight[i] = this.content[i].clientHeight;
+						if(this.spoilerStatus[i] == 'opened')
+						{
+							this.content[i].style.height = this.contentHeight[i]+'px';
+						}
+					}
+				}
 			};
 		}
 	/**
