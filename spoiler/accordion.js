@@ -116,12 +116,13 @@
 						this.className = this.object.spoilerTitle + ' opened';
 						console.log(this.object.prevElement);
 
+						// closing previos element if it opened
 						if(Spoiler.prototype.spoilerStatusCheck(this.object, this.object.prevElement) == 'opened')
 						{
 							Spoiler.prototype.slide(this.object.content[this.object.prevElement],
 									'up', 
 									this.object.contentHeight[this.object.prevElement], 
-									this.index, 
+									this.object.prevElement, 
 									this.object, 
 									this.object.velocity);
 							this.className = this.object.spoilerTitle + ' closed';
