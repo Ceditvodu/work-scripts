@@ -4,7 +4,7 @@
   - it`s writen on plain js, so you dont need no any of modern libraries or fraimworks to make it work;
   - also it describe by next design pattern and will make upgrade more easier:
     - module;
-    - controller;
+    - constructor;
     - prototype;
   - creating different groups with their own class for a couple of elements;
   - change class name for inner elements;
