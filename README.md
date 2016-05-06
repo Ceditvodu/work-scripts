@@ -14,7 +14,6 @@
     - spoiler;
     - half content spoiler;
     - accordion.
-  - creating half size spoiler;
   - title text changing on toggle;
   - [example](http://s.codepen.io/Ceditvodu/debug/yORmaO)
   - [referanse](https://github.com/Ceditvodu/work-scripts/wiki/Spoiler)
