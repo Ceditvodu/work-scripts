@@ -212,66 +212,66 @@
 					}
 				}
 			};
-		/**
-			* @public
-			* @method
-			* @name toggle
-			* @description toggle spoiler element
-			* @example spoiler.toggle();
-			* @param {int} index - it is index of spoiler element with current className 
-			*/
-			this.toggle = function(index)
+		}
+	/**
+		* @public
+		* @method
+		* @name toggle
+		* @description toggle spoiler element
+		* @example spoiler.toggle();
+		* @param {int} index - it is index of spoiler element with current className 
+		*/
+		Spoiler.toggle = function(index)
+		{
+			if(index != undefined)
 			{
-				if(index != undefined)
+				if(spoilerStatusCheck(this, index) == 'closed')
 				{
-					if(spoilerStatusCheck(this, index) == 'closed')
-					{
-						slide(this.content[index],'down', this.contentHeight[index], index, this, this.velocity);
-						this.title[index].className = this.spoilerTitle+' opened';
-					}
-					else if(spoilerStatusCheck(this, index) == 'opened')
-					{
-						slide(this.content[index],'up', this.contentHeight[index], index, this, this.velocity);
-						this.title[index].className = this.spoilerTitle+' closed';
-					}
+					slide(this.content[index],'down', this.contentHeight[index], index, this, this.velocity);
+					this.title[index].className = this.spoilerTitle+' opened';
 				}
-				else
+				else if(spoilerStatusCheck(this, index) == 'opened')
 				{
-					for (var i = 0; i < this.spoiler.length; i++) {
-						if(spoilerStatusCheck(this, i) == 'closed')
-						{
-							slide(this.content[i],'down', this.contentHeight[i], i, this, this.velocity);
-							this.title[i].className = this.spoilerTitle+' opened';
-						}
-						else if(spoilerStatusCheck(this, i) == 'opened')
-						{
-							slide(this.content[i],'up', this.contentHeight[i], i, this, this.velocity);
-							this.title[i].className = this.spoilerTitle+' closed';
-						}
-					};
+					slide(this.content[index],'up', this.contentHeight[index], index, this, this.velocity);
+					this.title[index].className = this.spoilerTitle+' closed';
 				}
 			}
-
-		/**
-			* @public
-			* @method
-			* @name getStatus
-			* @description returning status of spoiler (opened, closed)
-			* @example spoiler.getStatus(0);
-			* @param {int} index - it is index of spoiler element with current className 
-			* @return {String} - status of current spoiler 
-			* @return {Array} - statuses of all spoilers with current className
-			*/
-			this.getStatus = function(index)
+			else
 			{
-				if (index != undefined) 
-				{
-					return this.spoilerStatus[index];
-				}
-				else
-				{
-					return this.spoilerStatus;
-				}
+				for (var i = 0; i < this.spoiler.length; i++) {
+					if(spoilerStatusCheck(this, i) == 'closed')
+					{
+						slide(this.content[i],'down', this.contentHeight[i], i, this, this.velocity);
+						this.title[i].className = this.spoilerTitle+' opened';
+					}
+					else if(spoilerStatusCheck(this, i) == 'opened')
+					{
+						slide(this.content[i],'up', this.contentHeight[i], i, this, this.velocity);
+						this.title[i].className = this.spoilerTitle+' closed';
+					}
+				};
+			}
+		}
+
+	/**
+		* @public
+		* @method
+		* @name getStatus
+		* @description returning status of spoiler (opened, closed)
+		* @example spoiler.getStatus(0);
+		* @param {int} index - it is index of spoiler element with current className 
+		* @return {String} - status of current spoiler 
+		* @return {Array} - statuses of all spoilers with current className
+		*/
+		Spoiler.getStatus = function(index)
+		{
+			if (index != undefined) 
+			{
+				return this.spoilerStatus[index];
+			}
+			else
+			{
+				return this.spoilerStatus;
 			}
 		}
 
