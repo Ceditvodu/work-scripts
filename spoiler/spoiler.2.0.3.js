@@ -38,8 +38,14 @@ var Observer = function(data, counter)
 	if(data.spoilerStatus[counter] == 'opened')
 	{
 		data.content[counter].style.height = null;
+		data.contentHeight[counter] = data.content[counter].clientHeight;
 		data.content[counter].style.height = data.clientHeight + 'px';
-		
+	}
+	else if(data.spoilerStatus[counter] == 'closed')
+	{
+		data.content[counter].style.height = null;
+		data.contentHeight[counter] = data.content[counter].clientHeight;
+		data.content[counter].style.height = 0 + 'px';
 	}
 
 }
@@ -261,6 +267,8 @@ var Observer = function(data, counter)
 										this.object, 
 										this.object.velocity);
 							this.className = this.object.spoilerTitle + ' closed';
+
+							//this.object.contentHeight[this.index] = this.object.content[this.index].clientHeight;
 
 							secondtitletoggle(this.object, this.index);
 						}
