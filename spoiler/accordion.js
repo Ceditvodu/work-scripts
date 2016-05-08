@@ -117,7 +117,6 @@
 										this.object, 
 										this.object.velocity);
 							this.className = this.object.spoilerTitle + ' opened';
-							console.log(this.object.prevElement);
 
 							// closing previos element if it opened
 							if(Spoiler.prototype.spoilerStatusCheck(this.object, this.object.prevElement) == 'opened')
@@ -141,9 +140,7 @@
 										this.object, 
 										this.object.velocity);
 							this.className = this.object.spoilerTitle + ' closed';
-							console.log(this.object.prevElement);
 						}
-								console.log(this.object.prevElement);
 					}
 				}
 			}
@@ -153,7 +150,7 @@
 	return Accordion;
 
 	// prototype parent class
-	Accordion.prototype = Object.create(Spoiler.prototype);
+	Accordion.prototype.spoiler = Object.create(Spoiler.prototype);
 
 	// applying constructor
 	Accordion.prototype.constructor = Accordion;

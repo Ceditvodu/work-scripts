@@ -1,4 +1,55 @@
 'use strict'
+
+var Observable = function()
+{
+
+	this.subscribers = new Array();
+	
+
+	this.subscribe = function(observer)
+	{
+		this.subscribers.push(observer);
+	}
+
+	this.unsubscribe = function(observer)
+	{
+		for (var i = 0; i < this.subscribers.length; i++) 
+		{
+			if (this.subscribers[i] === observer) 
+			{
+				this.subscribers[i].splice(i, 1);
+				return;
+			};
+		};
+	}
+
+	this.publish = function(data, counter)
+	{
+		for (var i = 0; i < this.subscribers.length; i++) {
+			this.subscribers[i](data, counter);
+		};
+	}
+
+}
+
+var Observer = function(data, counter)
+{
+	console.log(data, counter);
+	if(data.spoilerStatus[counter] == 'opened')
+	{
+		data.content[counter].style.height = null;
+		data.content[counter].style.height = data.clientHeight + 'px';
+		
+	}
+
+}
+
+//var width_observer = new Observer();
+
+
+
+
+
 /**
 	* @name Spoiler
 	* @version 2.0.2
@@ -14,11 +65,14 @@
 	* @param {String} content - class of spoiler content div
 	*/
 
-	var Spoiler = (function(){
+	var Spoiler = (function()
+	{
 		// constructor
-		function Spoiler(className, status, velocity, content, title, alternative_title){
-		// spoiler parametrs initialization
-		// standart parametrs for all elements with same className
+		function Spoiler(className, status, velocity, content, title, alternative_title)
+		{
+
+			// spoiler parametrs initialization
+			// standart parametrs for all elements with same className
 		/**
 			* @public
 			*/
@@ -108,6 +162,7 @@
 			// start of Unique innitialization
 			for (var i = 0; i < document.getElementsByClassName(this.spoilerName).length; i++) 
 			{
+
 				this.spoiler[i] = document.getElementsByClassName(this.spoilerName)[i];
 
 				// set that spoiler is ready for clicking
@@ -211,23 +266,24 @@
 						}
 					}
 				}
+				if(Observable != undefined)
+				{
+					Observable.apply(this, arguments);
+					//console.log(document.getElementsByClassName(this.spoilerName)[indexes], indexes);
+					this.subscribe(Observer);
+					var counter = 0;
+					var thisone = this;
+					this.parap = function(){
 
+						thisone.publish(thisone, counter++);
 
-				window.onresize = function(){
-						console.log(this.Spoiler);
-					
-					for (var i = 0; i < document.getElementsByClassName(this.spoiler).length; i++) 
-					{
-
-						this.contentHeight[i] = this.content[i].clientHeight;
-						if(this.spoilerStatus[i] == 'opened')
-						{
-							this.content[i].style.height = this.contentHeight[i]+'px';
-						}
 					}
+					window.addEventListener('resize', this.parap, false);
 				}
 			};
+
 		}
+
 	/**
 		* @public
 		* @method
@@ -307,8 +363,6 @@
 		Spoiler.prototype.spoilerStatusCheck = function(object, index){
 			return spoilerStatusCheck.call(this, object, index);
 		}
-
-
 
 	/**
 		* @private
@@ -449,8 +503,7 @@
 
 		//returning object
 		return Spoiler;
+
 	})();
-
-
 
 	
