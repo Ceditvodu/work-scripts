@@ -34,14 +34,15 @@ var Observable = function()
 
 var Observer = function(data, counter)
 {
-	console.log(data, counter);
+	//console.log(data, counter);
 	if(data.spoilerStatus[counter] == 'opened')
 	{
+		console.log(data);
 		data.content[counter].style.height = null;
 		data.contentHeight[counter] = data.content[counter].clientHeight;
 		data.content[counter].style.height = data.clientHeight + 'px';
 	}
-	else if(data.spoilerStatus[counter] == 'closed')
+	if(data.spoilerStatus[counter] == 'closed')
 	{
 		data.content[counter].style.height = null;
 		data.contentHeight[counter] = data.content[counter].clientHeight;
@@ -448,7 +449,9 @@ var Observer = function(data, counter)
 				/**
 					* @privat
 					*/
+					// content.style.height = null;
 					var height = content.clientHeight;
+					// content.style.height = '0px';
 					clickable(object, index, false);
 					content.style.height = height + velocity + 'px';
 					if(height >= originalHeight)
