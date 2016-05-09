@@ -1,68 +1,12 @@
 'use strict'
 
-var Observable = function()
-{
-
-	this.subscribers = new Array();
-	
-
-	this.subscribe = function(observer)
-	{
-		this.subscribers.push(observer);
-	}
-
-	this.unsubscribe = function(observer)
-	{
-		for (var i = 0; i < this.subscribers.length; i++) 
-		{
-			if (this.subscribers[i] === observer) 
-			{
-				this.subscribers[i].splice(i, 1);
-				return;
-			};
-		};
-	}
-
-	this.publish = function(data, counter)
-	{
-		for (var i = 0; i < this.subscribers.length; i++) {
-			this.subscribers[i](data, counter);
-		};
-	}
-
-}
-
-var Observer = function(data, counter)
-{
-	//console.log(data, counter);
-	if(data.spoilerStatus[counter] == 'opened')
-	{
-		console.log(data);
-		data.content[counter].style.height = null;
-		data.contentHeight[counter] = data.content[counter].clientHeight;
-		data.content[counter].style.height = data.clientHeight + 'px';
-	}
-	if(data.spoilerStatus[counter] == 'closed')
-	{
-		data.content[counter].style.height = null;
-		data.contentHeight[counter] = data.content[counter].clientHeight;
-		data.content[counter].style.height = 0 + 'px';
-	}
-
-}
-
-//var width_observer = new Observer();
-
-
-
-
-
 /**
 	* @name Spoiler
 	* @version 2.0.2
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
+	* @augments Spoiler
 	* @classdesc this class will create spoiler.
 	* @example var spoiler = new Spoiler('spoiler','opened', 1);
 	* @param {String} className - class of div wich containe spoiler child elements.
@@ -275,17 +219,15 @@ var Observer = function(data, counter)
 						}
 					}
 				}
+				// first step responsive feature
 				if(Observable != undefined)
 				{
 					Observable.apply(this, arguments);
-					//console.log(document.getElementsByClassName(this.spoilerName)[indexes], indexes);
-					this.subscribe(Observer);
+					this.subscribe(Width_Observer);
 					var counter = 0;
 					var thisone = this;
 					this.parap = function(){
-
 						thisone.publish(thisone, counter++);
-
 					}
 					window.addEventListener('resize', this.parap, false);
 				}
@@ -517,4 +459,85 @@ var Observer = function(data, counter)
 
 	})();
 
-	
+/**
+	* @name Observable
+	* @class
+	* @classdesc standart subject for obsrver 
+	* @example this.subscribe({some observer});
+	*/
+	var Observable = function()
+	{
+
+		this.subscribers = new Array();
+
+	/**
+		* @public
+		* @function
+		* @name subscribe
+		* @description for subscribing observers
+		* @param {Object} observer - object wich containe observer instans
+		*/
+		this.subscribe = function(observer)
+		{
+			this.subscribers.push(observer);
+		}
+
+	/**
+		* @public
+		* @function
+		* @name unsubscribe
+		* @description for unsubscribing observers
+		* @param {Object} observer - object wich containe observer instans
+		*/
+		this.unsubscribe = function(observer)
+		{
+			for (var i = 0; i < this.subscribers.length; i++) 
+			{
+				if (this.subscribers[i] === observer) 
+				{
+					this.subscribers[i].splice(i, 1);
+					return;
+				};
+			};
+		}
+
+	/**
+		* @public
+		* @function
+		* @name publish
+		* @description calling observers constructors
+		* @param {Object} data - some objects collection to do some actions with
+		* @param {int} counter - index of sub object in data collection
+		*/
+		this.publish = function(data, counter)
+		{
+			for (var i = 0; i < this.subscribers.length; i++) {
+				this.subscribers[i](data, counter);
+			};
+		}
+
+	}
+
+/**
+	* @name Width_Observer
+	* @class
+	* @classdesc observer type for manipulating with observable
+	* @param {Object} data - some objects collection to do some actions with
+	* @param {int} counter - index of sub object in data collection
+	*/
+	var Width_Observer = function(data, counter)
+	{
+		if(data.spoilerStatus[counter] == 'opened')
+		{
+			data.content[counter].style.height = null;
+			data.contentHeight[counter] = data.content[counter].clientHeight;
+			data.content[counter].style.height = data.clientHeight + 'px';
+		}
+		if(data.spoilerStatus[counter] == 'closed')
+		{
+			data.content[counter].style.height = null;
+			data.contentHeight[counter] = data.content[counter].clientHeight;
+			data.content[counter].style.height = 0 + 'px';
+		}
+
+	}

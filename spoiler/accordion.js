@@ -7,7 +7,7 @@
 	* @copyright Ivan Kaduk 2016.
 	* @class
 	* @augments Spoiler
-	* @classdesc 
+	* @classdesc the spoiler wich can holding just one object in opened condition, another will be closed automaticaly
 	* @example var tab = new Accordion('spoiler6','opened',1);
 	* @param {String} className - class of div wich containe accordion child elements.
 	* @param {String} status - start status of accordion, it can be 'opened' or 'closed'.
