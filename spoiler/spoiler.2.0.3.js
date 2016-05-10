@@ -219,6 +219,7 @@
 						}
 					}
 				}
+
 				// first step responsive feature
 				if(Observable != undefined)
 				{
