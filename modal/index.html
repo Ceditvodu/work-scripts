@@ -134,15 +134,15 @@ var Modal = (function()
 			content.className = 'content';
 			content.innerHTML = modal_content;
 			content.style.position = 'fixed';
-			content.style.width = this.modal_larg_width + 'px';
+			//content.style.width = this.modal_larg_width + 'px';
 			content.style.height = 'auto';
 			content.style.top = ( (screen.availHeight  - content.clientHeight) / 4 ) + 'px';
-			content.style.left = ( (screen.width - this.modal_larg_width) / 2 ) + 'px';
+			content.style.left = ( (screen.width - content.clientWidth) / 2 ) + 'px';
 			this.modal[i].appendChild(content);
 
 			this.modal_status[i] = 'closed';
 
-			console.log(this.modal[i],screen.availHeight  ,content.clientHeight);
+			console.log(this.modal[i],screen.width  ,content.clientWidth);
 
 
 		};
