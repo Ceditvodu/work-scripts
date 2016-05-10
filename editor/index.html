@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	#result span{
+		background: pink;
+		border-radius: 10px;
+		font-size: 34px;
+	}
+	#editor{
+		opacity: 0;
+	}
+	html{
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		user-select: none;   
+		    -webkit-user-select: none;
+    /* user-select -- это нестандартное свойство */
+
+    -moz-user-select: none;
+    /* поэтому нужны префиксы */
+
+    -ms-user-select: none;
+	}
+</style>
+<body>
+	<div id="result" class="editor">
+		
+	</div>
+	<textarea name="" id="editor" cols="30" rows="10">
+	</textarea>
+</body>
+</html>
+<script>
+
+document.getElementById('editor').onkeydown = function(){
+	if(document.getElementById('editor').value != ''){
+		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
+		document.getElementById('editor').value = '';
+	}
+};
+document.getElementById('editor').onkeyup = function(){
+	if(document.getElementById('editor').value != ''){
+		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
+		document.getElementById('editor').value = '';
+	}
+};
+window.onload = function(){
+	document.getElementById('editor').focus();
+}
+document.onclick = function(){
+	document.getElementById('editor').focus();
+}
+//window.onload = loop;
+</script>
