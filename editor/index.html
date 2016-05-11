@@ -35,6 +35,246 @@
 </body>
 </html>
 <script>
+'use strict'
+	///////////////////////////////////
+	/**         MAIN CLASS          **/
+	///////////////////////////////////
+/**
+	* @name Editor
+	* @version 1.0.0
+	* @author Ivan Kaduk
+	* @copyright Ivan Kaduk 2016.
+	* @class
+	* @augments Observable
+	* @classdesc this class is creating editor object
+	* @example var spoiler = new Spoiler('spoiler','opened', 1);
+	* @param {String} className - class of div wich containe spoiler child elements.
+	*/
+	var Editor = (function()
+	{
+		function Editor(name, options){
+
+		}
+
+		return Editor;
+
+	})()
+
+	///////////////////////////////////
+	/**         OBSERVABLE          **/
+	///////////////////////////////////
+
+/**
+	* @name Observable
+	* @class
+	* @classdesc standart subject for obsrver 
+	* @example this.subscribe({some observer});
+	*/
+	var Observable = function()
+	{
+
+		this.subscribers = new Array();
+
+	/**
+		* @public
+		* @function
+		* @name subscribe
+		* @description for subscribing observers
+		* @param {Object} observer - object wich containe observer instans
+		*/
+		this.subscribe = function(observer)
+		{
+			this.subscribers.push(observer);
+		}
+
+	/**
+		* @public
+		* @function
+		* @name unsubscribe
+		* @description for unsubscribing observers
+		* @param {Object} observer - object wich containe observer instans
+		*/
+		this.unsubscribe = function(observer)
+		{
+			for (var i = 0; i < this.subscribers.length; i++) 
+			{
+				if (this.subscribers[i] === observer) 
+				{
+					this.subscribers[i].splice(i, 1);
+					return;
+				};
+			};
+		}
+
+	/**
+		* @public
+		* @function
+		* @name publish
+		* @description calling observers constructors
+		* @param {Object} data - some objects collection to do some actions with
+		* @param {int} counter - index of sub object in data collection
+		*/
+		this.publish = function(data)
+		{
+			for (var i = 0; i < this.subscribers.length; i++) {
+				this.subscribers[i](data);
+			};
+		}
+
+	}
+
+	///////////////////////////////////
+	/**         OBSERVER            **/
+	///////////////////////////////////
+
+	var Key_Observer = function(data)
+	{	
+
+	}
+
+
+	///////////////////////////////////
+	/**         SINGELTON           **/
+	///////////////////////////////////
+	var Key_Scope_Singelton = (function () {
+    var instance;
+
+    function createInstance() 
+    {
+
+    	var key_map = new Array();
+    	var key_flag = false;
+
+		   function addKeyToMap(key) {
+		    if(key_map.length == 0)
+		    {
+		     	key_map.push(key);
+		    }
+		    else
+		    {
+			    for (i = 0; i <= key_map.length; i++) 
+			     {
+			      if(key_map[i] == key) 
+			      {
+			        key_flag = true;
+			      }
+			    }
+			    if(key_flag == false)
+			    {
+			     	key_map.push(key);
+			    }
+			    key_flag = false;
+		    }
+		  }
+
+		  function removeKeyFromMap(key) {
+		    for (i = 0; i <= key_map.length; i++) 
+		    {
+		      if (key_map[i] == key) 
+		      {
+		        key_map.splice(i, 1);
+		      }
+		    }
+		  }
+
+
+		  instance.myKeyDown = function(e)  {
+		    var keynum;
+		    if (window.event) { // IE         
+		      keynum = e.keyCode;
+		    } else
+		    if (e.which) { // Netscape/Firefox/Opera          
+		      keynum = e.which;
+		    }
+		    keyadd(keynum);
+		  }
+
+		  instance.myKeyUp = function(e) {
+		    var keynum;
+		    if (window.event) { // IE         
+		      keynum = e.keyCode;
+		    } else
+		    if (e.which) { // Netscape/Firefox/Opera          
+		      keynum = e.which;
+		    }
+		    keyremove(keynum);
+		  }
+
+		    		    
+		    return {
+		      addKeyToMap : addKeyToMap,
+		      removeKeyFromMap : removeKeyFromMap
+		    };
+        //return object;
+    }
+
+
+		// function keyadd(key) {
+	 //    if (keymap.length == 0) {
+	 //      keymap.push(key);
+	 //    } else {
+	 //      for (i = 0; i <= keymap.length; i++) {
+	 //        if (keymap[i] == key) {
+	 //          this.keyflag = true;
+	 //        }
+	 //      }
+	 //      if (this.keyflag == false) {
+	 //        keymap.push(key);
+	 //      }
+	 //      this.keyflag = false;
+	 //    }
+	 //  }
+
+	 //  // method for removing an realesed 
+	 //  // button from array
+	 //  function keyremove(key) {
+	 //    for (i = 0; i <= keymap.length; i++) {
+	 //      if (keymap[i] == key) {
+	 //        keymap.splice(i, 1);
+	 //      }
+	 //    }
+	 //  }
+
+	 //  // method that runs when 
+	 //  // button pushed 
+	 //  instance.myKeyDown = function(e)  {
+	 //    var keynum;
+	 //    if (window.event) { // IE         
+	 //      keynum = e.keyCode;
+	 //    } else
+	 //    if (e.which) { // Netscape/Firefox/Opera          
+	 //      keynum = e.which;
+	 //    }
+	 //    keyadd(keynum);
+	 //  }
+
+	 //  // method that runs when button 
+	 //  // relesed
+	 //  instance.myKeyUp = function(e) {
+	 //    var keynum;
+	 //    if (window.event) { // IE         
+	 //      keynum = e.keyCode;
+	 //    } else
+	 //    if (e.which) { // Netscape/Firefox/Opera          
+	 //      keynum = e.which;
+	 //    }
+	 //    keyremove(keynum);
+	 //  }
+ 		return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+            return instance;
+        }
+    };
+	})();
+
+	    var instance1 = Key_Scope_Singelton.getInstance();
+    var instance2 = Key_Scope_Singelton.getInstance();
+    console.log(instance1);
+    console.log(instance2);
+ 
 
 document.getElementById('editor').onkeydown = function(){
 	if(document.getElementById('editor').value != ''){

@@ -6,7 +6,7 @@
 	* @author Ivan Kaduk
 	* @copyright Ivan Kaduk 2016.
 	* @class
-	* @augments Spoiler
+	* @augments Observable
 	* @classdesc this class will create spoiler.
 	* @example var spoiler = new Spoiler('spoiler','opened', 1);
 	* @param {String} className - class of div wich containe spoiler child elements.
