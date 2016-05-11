@@ -3,12 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 <style>
+
 	#result span{
 		background: pink;
 		border-radius: 10px;
 		font-size: 34px;
+		font-family: 'Inconsolata', monospace;
 	}
 	#editor{
 		opacity: 0;
@@ -32,6 +35,7 @@
 	</div>
 	<textarea name="" id="editor" cols="30" rows="10">
 	</textarea>
+	<div class="console" style="position:fixed; top:0; right:0; width:200px; height: 50px;"></div>
 </body>
 </html>
 <script>
@@ -136,7 +140,9 @@
 	///////////////////////////////////
 	/**         SINGELTON           **/
 	///////////////////////////////////
+
 	var Key_Scope_Singelton = (function () {
+
     var instance;
 
     function createInstance() 
@@ -145,14 +151,14 @@
     	var key_map = new Array();
     	var key_flag = false;
 
-		   function addKeyToMap(key) {
+		  function addKeyToMap(key) {
 		    if(key_map.length == 0)
 		    {
 		     	key_map.push(key);
 		    }
 		    else
 		    {
-			    for (i = 0; i <= key_map.length; i++) 
+			    for (var i = 0; i <= key_map.length; i++) 
 			     {
 			      if(key_map[i] == key) 
 			      {
@@ -168,7 +174,7 @@
 		  }
 
 		  function removeKeyFromMap(key) {
-		    for (i = 0; i <= key_map.length; i++) 
+		    for (var i = 0; i <= key_map.length; i++) 
 		    {
 		      if (key_map[i] == key) 
 		      {
@@ -177,89 +183,51 @@
 		    }
 		  }
 
-
-		  instance.myKeyDown = function(e)  {
-		    var keynum;
-		    if (window.event) { // IE         
-		      keynum = e.keyCode;
-		    } else
-		    if (e.which) { // Netscape/Firefox/Opera          
-		      keynum = e.which;
+		  function keyDown(e)  {
+		    var key_num;
+		    if (window.event) // IE   
+		    {       
+		      key_num = e.keyCode;
+		    } 
+		    else if (e.which) // Netscape/Firefox/Opera
+		    {           
+		      key_num = e.which;
 		    }
-		    keyadd(keynum);
+		    addKeyToMap(key_num);
 		  }
 
-		  instance.myKeyUp = function(e) {
-		    var keynum;
-		    if (window.event) { // IE         
-		      keynum = e.keyCode;
-		    } else
-		    if (e.which) { // Netscape/Firefox/Opera          
-		      keynum = e.which;
+		  function keyUp(e) {
+		    var key_num;
+		    if (window.event) // IE  
+		    {         
+		      key_num = e.keyCode;
+		    } 
+		    else if (e.which) // Netscape/Firefox/Opera 
+		    {          
+		      key_num = e.which;
 		    }
-		    keyremove(keynum);
+		    removeKeyFromMap(key_num);
 		  }
 
-		    		    
-		    return {
-		      addKeyToMap : addKeyToMap,
-		      removeKeyFromMap : removeKeyFromMap
-		    };
-        //return object;
+		  function getKeyMap()
+		  {
+		  	return key_map.sort();
+		  }
+
+		  function clearKeyMap()
+		  {
+		  	key_map = [];
+		  }
+ 		    
+		  return {
+		    keyDown : keyDown,
+		    keyUp : keyUp,
+		    getKeyMap: getKeyMap,
+		    clearKeyMap: clearKeyMap
+		  };
+
     }
 
-
-		// function keyadd(key) {
-	 //    if (keymap.length == 0) {
-	 //      keymap.push(key);
-	 //    } else {
-	 //      for (i = 0; i <= keymap.length; i++) {
-	 //        if (keymap[i] == key) {
-	 //          this.keyflag = true;
-	 //        }
-	 //      }
-	 //      if (this.keyflag == false) {
-	 //        keymap.push(key);
-	 //      }
-	 //      this.keyflag = false;
-	 //    }
-	 //  }
-
-	 //  // method for removing an realesed 
-	 //  // button from array
-	 //  function keyremove(key) {
-	 //    for (i = 0; i <= keymap.length; i++) {
-	 //      if (keymap[i] == key) {
-	 //        keymap.splice(i, 1);
-	 //      }
-	 //    }
-	 //  }
-
-	 //  // method that runs when 
-	 //  // button pushed 
-	 //  instance.myKeyDown = function(e)  {
-	 //    var keynum;
-	 //    if (window.event) { // IE         
-	 //      keynum = e.keyCode;
-	 //    } else
-	 //    if (e.which) { // Netscape/Firefox/Opera          
-	 //      keynum = e.which;
-	 //    }
-	 //    keyadd(keynum);
-	 //  }
-
-	 //  // method that runs when button 
-	 //  // relesed
-	 //  instance.myKeyUp = function(e) {
-	 //    var keynum;
-	 //    if (window.event) { // IE         
-	 //      keynum = e.keyCode;
-	 //    } else
-	 //    if (e.which) { // Netscape/Firefox/Opera          
-	 //      keynum = e.which;
-	 //    }
-	 //    keyremove(keynum);
-	 //  }
  		return {
         getInstance: function () {
             if (!instance) {
@@ -270,23 +238,26 @@
     };
 	})();
 
-	    var instance1 = Key_Scope_Singelton.getInstance();
-    var instance2 = Key_Scope_Singelton.getInstance();
-    console.log(instance1);
-    console.log(instance2);
+	var key_scope = Key_Scope_Singelton.getInstance();
+
  
 
-document.getElementById('editor').onkeydown = function(){
+document.getElementById('editor').onkeydown = function(e){
 	if(document.getElementById('editor').value != ''){
 		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
 		document.getElementById('editor').value = '';
 	}
+		key_scope.keyDown(e);
+		document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
 };
-document.getElementById('editor').onkeyup = function(){
+document.getElementById('editor').onkeyup = function(e){
 	if(document.getElementById('editor').value != ''){
 		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
 		document.getElementById('editor').value = '';
 	}
+	key_scope.keyUp(e);
+	document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
+
 };
 window.onload = function(){
 	document.getElementById('editor').focus();
