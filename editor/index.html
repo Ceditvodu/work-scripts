@@ -11,12 +11,12 @@
 		background: pink;
 		border-radius: 10px;
 		font-size: 34px;
-		font-family: 'Inconsolata', monospace;
 	}
 	#editor{
 		opacity: 0;
 	}
 	html{
+		font-family: 'Inconsolata', monospace;
 /*		-moz-user-select: none;
 		-khtml-user-select: none;
 		user-select: none;   
@@ -82,6 +82,13 @@
 					this.container[i] = document.getElementsByClassName(this.editor_name)[i];
 					this.container[i].style.position = 'relative';
 
+					this.symbol_buffer[i] = document.createElement('textarea');
+					this.symbol_buffer[i].className = 'symbol_buffer';
+					this.symbol_buffer[i].cols = '1';
+					this.symbol_buffer[i].rows = '1';
+					this.symbol_buffer[i].style.opacity = '0';
+					this.container[i].appendChild(this.symbol_buffer[i]);
+
 					this.work_space[i] = document.createElement('div');
 					this.work_space[i].className = 'result';
 					this.work_space[i].style.border = '1px solid #000';
@@ -91,12 +98,6 @@
 					this.work_space[i].onmousedown = disableselect;
 					this.container[i].appendChild(this.work_space[i]);
 
-					this.symbol_buffer[i] = document.createElement('textarea');
-					this.symbol_buffer[i].className = 'symbol_buffer';
-					this.symbol_buffer[i].cols = '1';
-					this.symbol_buffer[i].rows = '1';
-					this.symbol_buffer[i].style.opacity = '0';
-					this.container[i].appendChild(this.symbol_buffer[i]);
 
 					if(options.console == true)
 					{
@@ -116,13 +117,30 @@
 					this.work_space[i].onclick = function()
 					{
 						this.object.symbol_buffer[this.index].focus();
+						console.log(window.getSelection());
 					}
 
+					if(Observable != undefined)
+					{
+						Observable.apply(this, arguments);
+						this.subscribe(Key_Observer);
+						this.parap = function(){
+						thisone.publish(thisone, counter++);
+						}
+					}
 					this.symbol_buffer[i].object = this;
 					this.symbol_buffer[i].index = i;
 					this.symbol_buffer[i].key_scope = Key_Scope.getInstance();
-					this.symbol_buffer[i].onkeydown = function(e){
-						if(this.object.symbol_buffer[this.index].value != ''){
+					this.symbol_buffer[i].onkeydown = function(e)
+					{
+						if(Observable != undefined)
+						{
+							this.object.publish(this, );
+							}
+						}
+
+						if(this.object.symbol_buffer[this.index].value != '')
+						{
 							this.object.work_space[this.index].innerHTML = this.object.work_space[this.index].innerHTML + '<span>' + this.object.symbol_buffer[this.index].value + '</span>';
 							this.object.symbol_buffer[this.index].value = '';
 						}
@@ -133,7 +151,8 @@
 
 							}
 					};
-					this.symbol_buffer[i].onkeyup = function(e){
+					this.symbol_buffer[i].onkeyup = function(e)
+					{
 						if(this.object.symbol_buffer[this.index].value != ''){
 							this.object.work_space[this.index].innerHTML = this.object.work_space[this.index].innerHTML + '<span>' + this.object.symbol_buffer[this.index].value + '</span>';
 							this.object.symbol_buffer[this.index].value = '';
@@ -146,8 +165,8 @@
 
 					};
 
-
 				};
+
 
 			}
 			else
