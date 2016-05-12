@@ -17,16 +17,11 @@
 		opacity: 0;
 	}
 	html{
-		-moz-user-select: none;
+/*		-moz-user-select: none;
 		-khtml-user-select: none;
 		user-select: none;   
 		    -webkit-user-select: none;
-    /* user-select -- это нестандартное свойство */
-
-    -moz-user-select: none;
-    /* поэтому нужны префиксы */
-
-    -ms-user-select: none;
+    -ms-user-select: none;*/
 	}
 </style>
 <body>
@@ -36,6 +31,18 @@
 	<textarea name="" id="editor" cols="30" rows="10">
 	</textarea>
 	<div class="console" style="position:fixed; top:0; right:0; width:200px; height: 50px;"></div>
+
+<div class="someeditor">
+	
+</div>
+
+<div class="someeditor">
+	
+</div>
+
+<div class="someeditor_another">
+	
+</div>
 </body>
 </html>
 <script>
@@ -57,7 +64,96 @@
 	var Editor = (function()
 	{
 		function Editor(name, options){
+			if(name != undefined)
+			{
+				this.editor_name = name;
 
+				this.container= new Array();
+
+				this.work_space = new Array();
+
+				this.symbol_buffer = new Array();
+
+				this.console = new Array();
+
+				for (var i = 0; i < document.getElementsByClassName(this.editor_name).length; i++) 
+				{
+
+					this.container[i] = document.getElementsByClassName(this.editor_name)[i];
+					this.container[i].style.position = 'relative';
+
+					this.work_space[i] = document.createElement('div');
+					this.work_space[i].className = 'result';
+					this.work_space[i].style.border = '1px solid #000';
+					this.work_space[i].style.height = '500px';
+					function disableselect(e) {return false}
+					this.work_space[i].onselectstart = function (){return false};
+					this.work_space[i].onmousedown = disableselect;
+					this.container[i].appendChild(this.work_space[i]);
+
+					this.symbol_buffer[i] = document.createElement('textarea');
+					this.symbol_buffer[i].className = 'symbol_buffer';
+					this.symbol_buffer[i].cols = '1';
+					this.symbol_buffer[i].rows = '1';
+					this.symbol_buffer[i].style.opacity = '0';
+					this.container[i].appendChild(this.symbol_buffer[i]);
+
+					if(options.console == true)
+					{
+						this.console[i] = document.createElement('div');
+						this.console[i].className = 'console';
+						this.console[i].style.border = '1px solid #000';
+						this.console[i].style.position = 'absolute';
+						this.console[i].style.top = '0px';
+						this.console[i].style.right = '0px';
+						this.console[i].style.width = '200px';
+						this.console[i].style.height = '50px';
+						this.container[i].appendChild(this.console[i]);
+					}
+
+					this.work_space[i].object = this;
+					this.work_space[i].index = i;
+					this.work_space[i].onclick = function()
+					{
+						this.object.symbol_buffer[this.index].focus();
+					}
+
+					this.symbol_buffer[i].object = this;
+					this.symbol_buffer[i].index = i;
+					this.symbol_buffer[i].key_scope = Key_Scope.getInstance();
+					this.symbol_buffer[i].onkeydown = function(e){
+						if(this.object.symbol_buffer[this.index].value != ''){
+							this.object.work_space[this.index].innerHTML = this.object.work_space[this.index].innerHTML + '<span>' + this.object.symbol_buffer[this.index].value + '</span>';
+							this.object.symbol_buffer[this.index].value = '';
+						}
+							this.key_scope.keyDown(e);
+							if(this.object.console[this.index] != undefined)
+							{
+								this.object.console[this.index].innerHTML = (this.key_scope.getKeyMap());
+
+							}
+					};
+					this.symbol_buffer[i].onkeyup = function(e){
+						if(this.object.symbol_buffer[this.index].value != ''){
+							this.object.work_space[this.index].innerHTML = this.object.work_space[this.index].innerHTML + '<span>' + this.object.symbol_buffer[this.index].value + '</span>';
+							this.object.symbol_buffer[this.index].value = '';
+						}
+						this.key_scope.keyUp(e);
+						if(this.object.console[this.index] != undefined)
+						{
+							this.object.console[this.index].innerHTML = (this.key_scope.getKeyMap());
+						}
+
+					};
+
+
+				};
+
+			}
+			else
+			{
+				console.log('sorry but you have not add any name to editors name field');
+			}
 		}
 
 		return Editor;
@@ -128,7 +224,7 @@
 	}
 
 	///////////////////////////////////
-	/**         OBSERVER            **/
+	/**         OBSERVERS           **/
 	///////////////////////////////////
 
 	var Key_Observer = function(data)
@@ -141,16 +237,38 @@
 	/**         SINGELTON           **/
 	///////////////////////////////////
 
-	var Key_Scope_Singelton = (function () {
+/**
+	* @name Key_Scope
+	* @version 1.0.0
+	* @author Ivan Kaduk
+	* @copyright Ivan Kaduk 2016.
+	* @class
+	* @classdesc it singelton which contain current key combinations
+	* @example var key_scope = Key_Scope.getInstance();
+	*/
+	var Key_Scope = (function () {
 
     var instance;
 
     function createInstance() 
     {
-
+    /**
+    	* @private
+    	*/
     	var key_map = new Array();
+
+    /**
+    	* @private
+    	*/
     	var key_flag = false;
 
+		/**
+			* @private
+			* @function
+			* @name addKeyToMap
+			* @description adding key code to key map
+			* @param {int} key - key code frome key event
+			*/
 		  function addKeyToMap(key) {
 		    if(key_map.length == 0)
 		    {
@@ -173,6 +291,13 @@
 		    }
 		  }
 
+		/**
+			* @private
+			* @function
+			* @name removeKeyFromMap
+			* @description removing key code to key map
+			* @param {int} key - key code frome key event
+			*/
 		  function removeKeyFromMap(key) {
 		    for (var i = 0; i <= key_map.length; i++) 
 		    {
@@ -183,6 +308,13 @@
 		    }
 		  }
 
+		/**
+			* @public
+			* @function
+			* @name keyDown
+			* @description catching code frome event and adding it to key map, on some action 
+			* @param {object} e - event which contain code of pressed button
+			*/
 		  function keyDown(e)  {
 		    var key_num;
 		    if (window.event) // IE   
@@ -196,6 +328,13 @@
 		    addKeyToMap(key_num);
 		  }
 
+		/**
+			* @public
+			* @function
+			* @name keyUp
+			* @description catching code frome event and removing it to key map, on some action 
+			* @param {object} e - event which contain code of pressed button
+			*/
 		  function keyUp(e) {
 		    var key_num;
 		    if (window.event) // IE  
@@ -209,11 +348,24 @@
 		    removeKeyFromMap(key_num);
 		  }
 
+		/**
+			* @public
+			* @function
+			* @name keyUp
+			* @description return key map 
+			* @return {Array} - key map content
+			*/
 		  function getKeyMap()
 		  {
 		  	return key_map.sort();
 		  }
 
+		/**
+			* @public
+			* @function
+			* @name keyUp
+			* @description refreshing key map
+			*/
 		  function clearKeyMap()
 		  {
 		  	key_map = [];
@@ -238,32 +390,46 @@
     };
 	})();
 
-	var key_scope = Key_Scope_Singelton.getInstance();
+	var key_scope = Key_Scope.getInstance();
 
  
 
-document.getElementById('editor').onkeydown = function(e){
-	if(document.getElementById('editor').value != ''){
-		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
-		document.getElementById('editor').value = '';
-	}
-		key_scope.keyDown(e);
-		document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
-};
-document.getElementById('editor').onkeyup = function(e){
-	if(document.getElementById('editor').value != ''){
-		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
-		document.getElementById('editor').value = '';
-	}
-	key_scope.keyUp(e);
-	document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
+// document.getElementById('editor').onkeydown = function(e){
+// 	if(document.getElementById('editor').value != ''){
+// 		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
+// 		document.getElementById('editor').value = '';
+// 	}
+// 		key_scope.keyDown(e);
+// 		document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
+// };
+// document.getElementById('editor').onkeyup = function(e){
+// 	if(document.getElementById('editor').value != ''){
+// 		document.getElementById('result').innerHTML = document.getElementById('result').innerHTML + '<span>' + document.getElementById('editor').value + '</span>';
+// 		document.getElementById('editor').value = '';
+// 	}
+// 	key_scope.keyUp(e);
+// 	document.getElementsByClassName('console')[0].innerHTML = (key_scope.getKeyMap());
 
-};
-window.onload = function(){
-	document.getElementById('editor').focus();
-}
-document.onclick = function(){
-	document.getElementById('editor').focus();
-}
+// };
+// window.onload = function(){
+// 	document.getElementById('editor').focus();
+// }
+// document.onclick = function(){
+// 	document.getElementById('editor').focus();
+// }
 //window.onload = loop;
+
+
+	///////////////////////////////////
+	/**         MAIN SCRIPT         **/
+	///////////////////////////////////
+
+	var first = new Editor('someeditor', {
+		console:true
+	});
+
+	var second = new Editor('someeditor_another', {
+		console:false
+	});
+
 </script>
